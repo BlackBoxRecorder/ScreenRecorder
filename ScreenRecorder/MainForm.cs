@@ -82,7 +82,7 @@ namespace ScreenRecorder
             {
                 //Populate and pass a list of recordingsources.
                 RecordingSources = GetVideoSourceByName(
-                    settings.VideoSourceType,
+                    (RecordingSourceType)settings.VideoSourceTypeIndex,
                     settings.VideoSourceName
                 )
             };
@@ -125,7 +125,7 @@ namespace ScreenRecorder
             }
 
             IVideoEncoder encoder;
-            if (settings.VideoEncoder == "H264")
+            if (ConfigOptions.VideoEncoderArray[settings.VideoEncoderIndex] == "H264")
             {
                 encoder = new H264VideoEncoder
                 {
@@ -146,7 +146,7 @@ namespace ScreenRecorder
             {
                 Bitrate = settings.VideoBitrate * 1000,
                 Framerate = settings.VideoFramerate,
-                Quality = settings.VideoQuality,
+                Quality = settings.VideoQualityIndex,
                 IsFixedFramerate = true,
                 //Currently supported are H264VideoEncoder and H265VideoEncoder
                 Encoder = encoder,
@@ -183,7 +183,7 @@ namespace ScreenRecorder
                 {
                     new VideoCaptureOverlay
                     {
-                        AnchorPoint = ScreenRecorderLib.Anchor.TopLeft,
+                        AnchorPoint = (ScreenRecorderLib.Anchor)settings.VideoOverlaysPositionIndex,
                         Offset = new ScreenSize(
                             settings.VideoOverlaysOffset.Item1,
                             settings.VideoOverlaysOffset.Item2
@@ -300,9 +300,9 @@ namespace ScreenRecorder
                 {
                     BtnPauseRecorder.Visible = false;
                     BtnStartRecorder.Text = "开始录制";
-                    MessageBox.Show(e.Error, "错误");
                     isRecording = false;
                     CleanupResources();
+                    MessageBox.Show(e.Error, "错误");
                 })
             );
         }
@@ -325,6 +325,7 @@ namespace ScreenRecorder
         private void CleanupResources()
         {
             timer.Stop();
+            LblRecordDuration.Text = "00:00:00";
             recorder?.Dispose();
             recorder = null;
         }

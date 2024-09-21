@@ -19,12 +19,12 @@ namespace ScreenRecorder
     public enum RecordingSourceType
     {
         [Description("显示器")]
-        Monitor,
+        Monitor = 0,
 
         [Description("窗体")]
-        Window,
+        Window = 1,
 
         [Description("摄像头")]
-        Camera
+        Camera = 2
     }
 }

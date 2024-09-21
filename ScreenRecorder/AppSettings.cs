@@ -11,7 +11,7 @@ namespace ScreenRecorder
         /// <summary>
         /// 录制的视频源类型，Window，Monitor，Camera
         /// </summary>
-        public RecordingSourceType VideoSourceType { get; set; }
+        public int VideoSourceTypeIndex { get; set; }
 
         /// <summary>
         /// 录制的视频源，ID
@@ -48,7 +48,7 @@ namespace ScreenRecorder
         /// <summary>
         /// 水印位置偏移，width，height
         /// </summary>
-        public Anchor VideoOverlaysPosition { get; set; } = Anchor.BottomRight;
+        public int VideoOverlaysPositionIndex { get; set; }
 
         /// <summary>
         /// 视频的比特率
@@ -68,7 +68,7 @@ namespace ScreenRecorder
         /// <summary>
         /// 输出视频的编码器，H264/H265
         /// </summary>
-        public string VideoEncoder { get; set; }
+        public int VideoEncoderIndex { get; set; }
 
         /// <summary>
         /// 视频的保存路径
@@ -87,7 +87,7 @@ namespace ScreenRecorder
         /// <summary>
         /// 录制的视频质量
         /// </summary>
-        public int VideoQuality { get; set; } = 70;
+        public int VideoQualityIndex { get; set; } = 4;
 
         /// <summary>
         /// 启用音频输入，录制麦克风
@@ -118,5 +118,16 @@ namespace ScreenRecorder
         /// 扬声器音量
         /// </summary>
         public int AudioOutputVolume { get; set; } = 50;
+    }
+
+    public static class ConfigOptions
+    {
+        public static string[] VideoQualityArray { get; set; } =
+            new string[] { "30", "40", "50", "60", "70", "80", "90", "100" };
+
+        public static string[] VideoEncoderArray { get; set; } = new string[] { "H264", "H265" };
+
+        public static string[] OverlaysPositionArray { get; set; } =
+            new string[] { "左上", "右上", "中间", "左下", "右下" };
     }
 }
