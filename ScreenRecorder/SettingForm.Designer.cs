@@ -122,7 +122,7 @@
             this.CmbRecordingSourceType.Location = new System.Drawing.Point(81, 32);
             this.CmbRecordingSourceType.Name = "CmbRecordingSourceType";
             this.CmbRecordingSourceType.Size = new System.Drawing.Size(73, 25);
-            this.CmbRecordingSourceType.TabIndex = 11;
+            this.CmbRecordingSourceType.TabIndex = 0;
             this.CmbRecordingSourceType.SelectedIndexChanged += new System.EventHandler(this.CmbRecordingSourceType_SelectedIndexChanged);
             // 
             // label19
@@ -147,7 +147,7 @@
             this.TxtFramerate.Location = new System.Drawing.Point(206, 72);
             this.TxtFramerate.Name = "TxtFramerate";
             this.TxtFramerate.Size = new System.Drawing.Size(51, 23);
-            this.TxtFramerate.TabIndex = 4;
+            this.TxtFramerate.TabIndex = 3;
             this.TxtFramerate.Text = "30";
             // 
             // label11
@@ -175,7 +175,7 @@
             this.CmbVideoEncoder.Location = new System.Drawing.Point(80, 72);
             this.CmbVideoEncoder.Name = "CmbVideoEncoder";
             this.CmbVideoEncoder.Size = new System.Drawing.Size(74, 25);
-            this.CmbVideoEncoder.TabIndex = 9;
+            this.CmbVideoEncoder.TabIndex = 2;
             // 
             // label20
             // 
@@ -193,7 +193,7 @@
             this.CmbVideoQuality.Location = new System.Drawing.Point(80, 115);
             this.CmbVideoQuality.Name = "CmbVideoQuality";
             this.CmbVideoQuality.Size = new System.Drawing.Size(74, 25);
-            this.CmbVideoQuality.TabIndex = 9;
+            this.CmbVideoQuality.TabIndex = 5;
             // 
             // CkbHiddenWindow
             // 
@@ -201,16 +201,16 @@
             this.CkbHiddenWindow.Location = new System.Drawing.Point(174, 118);
             this.CkbHiddenWindow.Name = "CkbHiddenWindow";
             this.CkbHiddenWindow.Size = new System.Drawing.Size(135, 21);
-            this.CkbHiddenWindow.TabIndex = 8;
+            this.CkbHiddenWindow.TabIndex = 6;
             this.CkbHiddenWindow.Text = "录制时隐藏程序窗体";
             this.CkbHiddenWindow.UseVisualStyleBackColor = true;
             // 
             // BtnSelectSavePath
             // 
-            this.BtnSelectSavePath.Location = new System.Drawing.Point(291, 159);
+            this.BtnSelectSavePath.Location = new System.Drawing.Point(291, 156);
             this.BtnSelectSavePath.Name = "BtnSelectSavePath";
             this.BtnSelectSavePath.Size = new System.Drawing.Size(75, 23);
-            this.BtnSelectSavePath.TabIndex = 7;
+            this.BtnSelectSavePath.TabIndex = 8;
             this.BtnSelectSavePath.Text = "浏览";
             this.BtnSelectSavePath.UseVisualStyleBackColor = true;
             // 
@@ -238,7 +238,7 @@
             this.TxtScreenRectY.Location = new System.Drawing.Point(171, 29);
             this.TxtScreenRectY.Name = "TxtScreenRectY";
             this.TxtScreenRectY.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectY.TabIndex = 2;
+            this.TxtScreenRectY.TabIndex = 10;
             // 
             // label9
             // 
@@ -266,7 +266,7 @@
             this.TxtScreenRectH.Location = new System.Drawing.Point(171, 67);
             this.TxtScreenRectH.Name = "TxtScreenRectH";
             this.TxtScreenRectH.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectH.TabIndex = 2;
+            this.TxtScreenRectH.TabIndex = 12;
             // 
             // TxtScreenRectW
             // 
@@ -274,7 +274,7 @@
             this.TxtScreenRectW.Location = new System.Drawing.Point(62, 67);
             this.TxtScreenRectW.Name = "TxtScreenRectW";
             this.TxtScreenRectW.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectW.TabIndex = 2;
+            this.TxtScreenRectW.TabIndex = 11;
             // 
             // BtnDrawRect
             // 
@@ -282,7 +282,7 @@
             this.BtnDrawRect.Location = new System.Drawing.Point(256, 32);
             this.BtnDrawRect.Name = "BtnDrawRect";
             this.BtnDrawRect.Size = new System.Drawing.Size(91, 58);
-            this.BtnDrawRect.TabIndex = 0;
+            this.BtnDrawRect.TabIndex = 13;
             this.BtnDrawRect.Text = "选择区域";
             this.BtnDrawRect.UseVisualStyleBackColor = true;
             // 
@@ -292,7 +292,7 @@
             this.TxtScreenRectX.Location = new System.Drawing.Point(62, 29);
             this.TxtScreenRectX.Name = "TxtScreenRectX";
             this.TxtScreenRectX.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectX.TabIndex = 2;
+            this.TxtScreenRectX.TabIndex = 9;
             // 
             // label8
             // 
@@ -321,7 +321,7 @@
             this.CmbVideoSource.Location = new System.Drawing.Point(174, 32);
             this.CmbVideoSource.Name = "CmbVideoSource";
             this.CmbVideoSource.Size = new System.Drawing.Size(190, 25);
-            this.CmbVideoSource.TabIndex = 5;
+            this.CmbVideoSource.TabIndex = 1;
             // 
             // label7
             // 
@@ -335,10 +335,10 @@
             // TxtSavePath
             // 
             this.TxtSavePath.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtSavePath.Location = new System.Drawing.Point(79, 159);
+            this.TxtSavePath.Location = new System.Drawing.Point(81, 156);
             this.TxtSavePath.Name = "TxtSavePath";
             this.TxtSavePath.Size = new System.Drawing.Size(202, 23);
-            this.TxtSavePath.TabIndex = 2;
+            this.TxtSavePath.TabIndex = 7;
             // 
             // label5
             // 
@@ -375,14 +375,14 @@
             this.TrbAudioOutputVolumn.Location = new System.Drawing.Point(340, 86);
             this.TrbAudioOutputVolumn.Name = "TrbAudioOutputVolumn";
             this.TrbAudioOutputVolumn.Size = new System.Drawing.Size(46, 23);
-            this.TrbAudioOutputVolumn.TabIndex = 7;
+            this.TrbAudioOutputVolumn.TabIndex = 19;
             // 
             // TrbAudioInputVolumn
             // 
             this.TrbAudioInputVolumn.Location = new System.Drawing.Point(340, 57);
             this.TrbAudioInputVolumn.Name = "TrbAudioInputVolumn";
             this.TrbAudioInputVolumn.Size = new System.Drawing.Size(46, 23);
-            this.TrbAudioInputVolumn.TabIndex = 7;
+            this.TrbAudioInputVolumn.TabIndex = 18;
             // 
             // CkbEnableAudioOutput
             // 
@@ -390,7 +390,7 @@
             this.CkbEnableAudioOutput.Location = new System.Drawing.Point(144, 28);
             this.CkbEnableAudioOutput.Name = "CkbEnableAudioOutput";
             this.CkbEnableAudioOutput.Size = new System.Drawing.Size(99, 21);
-            this.CkbEnableAudioOutput.TabIndex = 6;
+            this.CkbEnableAudioOutput.TabIndex = 15;
             this.CkbEnableAudioOutput.Text = "录制音频输出";
             this.CkbEnableAudioOutput.UseVisualStyleBackColor = true;
             // 
@@ -400,7 +400,7 @@
             this.CkbEnableAudioInput.Location = new System.Drawing.Point(21, 28);
             this.CkbEnableAudioInput.Name = "CkbEnableAudioInput";
             this.CkbEnableAudioInput.Size = new System.Drawing.Size(99, 21);
-            this.CkbEnableAudioInput.TabIndex = 6;
+            this.CkbEnableAudioInput.TabIndex = 14;
             this.CkbEnableAudioInput.Text = "录制音频输入";
             this.CkbEnableAudioInput.UseVisualStyleBackColor = true;
             // 
@@ -412,7 +412,7 @@
             this.CmbAudioOutputDevice.Location = new System.Drawing.Point(117, 86);
             this.CmbAudioOutputDevice.Name = "CmbAudioOutputDevice";
             this.CmbAudioOutputDevice.Size = new System.Drawing.Size(164, 25);
-            this.CmbAudioOutputDevice.TabIndex = 4;
+            this.CmbAudioOutputDevice.TabIndex = 17;
             // 
             // label1
             // 
@@ -442,7 +442,7 @@
             this.CmbAudioInputDevice.Location = new System.Drawing.Point(117, 55);
             this.CmbAudioInputDevice.Name = "CmbAudioInputDevice";
             this.CmbAudioInputDevice.Size = new System.Drawing.Size(164, 25);
-            this.CmbAudioInputDevice.TabIndex = 4;
+            this.CmbAudioInputDevice.TabIndex = 16;
             // 
             // label4
             // 
@@ -494,7 +494,7 @@
             this.TxtOverlayHeightOffset.Location = new System.Drawing.Point(198, 88);
             this.TxtOverlayHeightOffset.Name = "TxtOverlayHeightOffset";
             this.TxtOverlayHeightOffset.Size = new System.Drawing.Size(51, 23);
-            this.TxtOverlayHeightOffset.TabIndex = 4;
+            this.TxtOverlayHeightOffset.TabIndex = 25;
             this.TxtOverlayHeightOffset.Text = "0";
             // 
             // TxtOverlayHeight
@@ -502,7 +502,7 @@
             this.TxtOverlayHeight.Location = new System.Drawing.Point(198, 58);
             this.TxtOverlayHeight.Name = "TxtOverlayHeight";
             this.TxtOverlayHeight.Size = new System.Drawing.Size(51, 23);
-            this.TxtOverlayHeight.TabIndex = 4;
+            this.TxtOverlayHeight.TabIndex = 23;
             this.TxtOverlayHeight.Text = "0";
             // 
             // label18
@@ -528,7 +528,7 @@
             this.TxtOverlayWidthOffset.Location = new System.Drawing.Point(115, 88);
             this.TxtOverlayWidthOffset.Name = "TxtOverlayWidthOffset";
             this.TxtOverlayWidthOffset.Size = new System.Drawing.Size(51, 23);
-            this.TxtOverlayWidthOffset.TabIndex = 4;
+            this.TxtOverlayWidthOffset.TabIndex = 24;
             this.TxtOverlayWidthOffset.Text = "0";
             // 
             // TxtOverlayWidth
@@ -536,7 +536,7 @@
             this.TxtOverlayWidth.Location = new System.Drawing.Point(115, 58);
             this.TxtOverlayWidth.Name = "TxtOverlayWidth";
             this.TxtOverlayWidth.Size = new System.Drawing.Size(51, 23);
-            this.TxtOverlayWidth.TabIndex = 4;
+            this.TxtOverlayWidth.TabIndex = 22;
             this.TxtOverlayWidth.Text = "256";
             // 
             // label17
@@ -600,7 +600,7 @@
             this.CmbOverlaysPosition.Location = new System.Drawing.Point(257, 27);
             this.CmbOverlaysPosition.Name = "CmbOverlaysPosition";
             this.CmbOverlaysPosition.Size = new System.Drawing.Size(93, 25);
-            this.CmbOverlaysPosition.TabIndex = 0;
+            this.CmbOverlaysPosition.TabIndex = 21;
             // 
             // CmbOverlaysCamera
             // 
@@ -609,7 +609,7 @@
             this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 27);
             this.CmbOverlaysCamera.Name = "CmbOverlaysCamera";
             this.CmbOverlaysCamera.Size = new System.Drawing.Size(93, 25);
-            this.CmbOverlaysCamera.TabIndex = 0;
+            this.CmbOverlaysCamera.TabIndex = 20;
             // 
             // CkbEnableOverlay
             // 
@@ -617,7 +617,7 @@
             this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
             this.CkbEnableOverlay.Name = "CkbEnableOverlay";
             this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
-            this.CkbEnableOverlay.TabIndex = 5;
+            this.CkbEnableOverlay.TabIndex = 26;
             this.CkbEnableOverlay.Text = "启用";
             this.CkbEnableOverlay.UseVisualStyleBackColor = true;
             // 

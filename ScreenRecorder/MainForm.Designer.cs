@@ -32,6 +32,7 @@
             this.BtnPauseRecorder = new System.Windows.Forms.Button();
             this.LblRecordDuration = new System.Windows.Forms.Label();
             this.LinkSettingForm = new System.Windows.Forms.LinkLabel();
+            this.CkbTopMost = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // BtnStartRecorder
@@ -79,11 +80,23 @@
             this.LinkSettingForm.Text = "设置";
             this.LinkSettingForm.Click += new System.EventHandler(this.LinkSettingForm_Click);
             // 
+            // CkbTopMost
+            // 
+            this.CkbTopMost.AutoSize = true;
+            this.CkbTopMost.Location = new System.Drawing.Point(71, 205);
+            this.CkbTopMost.Name = "CkbTopMost";
+            this.CkbTopMost.Size = new System.Drawing.Size(48, 16);
+            this.CkbTopMost.TabIndex = 7;
+            this.CkbTopMost.Text = "顶置";
+            this.CkbTopMost.UseVisualStyleBackColor = true;
+            this.CkbTopMost.CheckedChanged += new System.EventHandler(this.CkbTopMost_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 249);
+            this.Controls.Add(this.CkbTopMost);
             this.Controls.Add(this.LinkSettingForm);
             this.Controls.Add(this.LblRecordDuration);
             this.Controls.Add(this.BtnPauseRecorder);
@@ -103,6 +116,7 @@
         private System.Windows.Forms.Button BtnPauseRecorder;
         private System.Windows.Forms.Label LblRecordDuration;
         private System.Windows.Forms.LinkLabel LinkSettingForm;
+        private System.Windows.Forms.CheckBox CkbTopMost;
     }
 }
 

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Newtonsoft.Json;
+using ScreenRecorder.Properties;
 using ScreenRecorderLib;
 
 namespace ScreenRecorder
@@ -37,11 +38,6 @@ namespace ScreenRecorder
             audioOutputList = Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices);
         }
 
-        private readonly string settingFile = Path.Combine(
-            Environment.CurrentDirectory,
-            "settings.json"
-        );
-
         public AppSettings Settings { get; private set; }
 
         private readonly List<RecordableWindow> windowList;
@@ -53,8 +49,7 @@ namespace ScreenRecorder
 
         private void SettingForm_Load(object sender, EventArgs e)
         {
-            LoadConfig();
-
+            Settings = AppSettings.LoadConfig();
             foreach (var item in ConfigOptions.VideoEncoderArray)
             {
                 CmbVideoEncoder.Items.Add(item);
@@ -114,27 +109,6 @@ namespace ScreenRecorder
             RefreshAudioComboBoxes();
 
             UpdateUI(Settings);
-        }
-
-        private void LoadConfig()
-        {
-            if (File.Exists(settingFile))
-            {
-                var jsonStr = File.ReadAllText(settingFile);
-                Settings = JsonConvert.DeserializeObject<AppSettings>(jsonStr);
-            }
-            else
-            {
-                Settings = new AppSettings();
-            }
-        }
-
-        private void SaveConfig()
-        {
-            File.WriteAllText(
-                settingFile,
-                JsonConvert.SerializeObject(Settings, Formatting.Indented)
-            );
         }
 
         private void UpdateUI(AppSettings settings)
@@ -226,7 +200,7 @@ namespace ScreenRecorder
 
             Settings.EnableOverlay = CkbEnableOverlay.Checked;
 
-            SaveConfig();
+            AppSettings.SaveConfig(Settings);
         }
 
         /// <summary>

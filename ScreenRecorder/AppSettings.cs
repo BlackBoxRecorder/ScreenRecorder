@@ -3,12 +3,38 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using ScreenRecorder.Properties;
 using ScreenRecorderLib;
 
 namespace ScreenRecorder
 {
     public class AppSettings
     {
+        public static readonly string SettingFile = Path.Combine(
+            Environment.CurrentDirectory,
+            "settings.json"
+        );
+
+        public static AppSettings LoadConfig()
+        {
+            if (File.Exists(AppSettings.SettingFile))
+            {
+                var jsonStr = File.ReadAllText(AppSettings.SettingFile);
+                return JsonConvert.DeserializeObject<AppSettings>(jsonStr);
+            }
+
+            return new AppSettings();
+        }
+
+        public static void SaveConfig(AppSettings settings)
+        {
+            File.WriteAllText(
+                AppSettings.SettingFile,
+                JsonConvert.SerializeObject(settings, Formatting.Indented)
+            );
+        }
+
         /// <summary>
         /// 录制的视频源类型，Monitor=0，Window=1，Camera=2
         /// </summary>

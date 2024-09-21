@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 using ScreenRecorder.Properties;
 using ScreenRecorderLib;
 
@@ -52,6 +53,12 @@ namespace ScreenRecorder
 
         private void CreateRecording()
         {
+            if (settings.HiddenMainWindow)
+            {
+                IntPtr hwnd = this.Handle;
+                Recorder.SetExcludeFromCapture(hwnd, true);
+            }
+
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             if (!Directory.Exists(settings.SavePath))
             {
@@ -347,6 +354,7 @@ namespace ScreenRecorder
         private void MainForm_Load(object sender, EventArgs e)
         {
             timer.Elapsed += Timer_Elapsed;
+            settings = AppSettings.LoadConfig();
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -394,8 +402,19 @@ namespace ScreenRecorder
         {
             var settingForm = new SettingForm();
             settingForm.ShowDialog();
-
             settings = settingForm.Settings;
+        }
+
+        private void CkbTopMost_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CkbTopMost.Checked)
+            {
+                TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
+            }
         }
     }
 }
