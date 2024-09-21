@@ -92,9 +92,12 @@ namespace ScreenRecorder
 
             foreach (var cam in cameraList)
             {
-                CmbOverlaysCamera.Items.Add(cam.DeviceName);
+                CmbOverlaysCamera.Items.Add(cam.FriendlyName);
             }
-            CmbOverlaysCamera.SelectedIndex = 0;
+            CmbOverlaysCamera.SelectedIndex = GetVideoSourceIndexByNameAndType(
+                Settings.VideoOverlaysDevice,
+                RecordingSourceType.Camera
+            );
 
             foreach (var item in ConfigOptions.VideoQualityArray)
             {
@@ -136,10 +139,10 @@ namespace ScreenRecorder
 
         private void UpdateUI(AppSettings settings)
         {
-            TxtScreenRectX.Text = settings.ScreenRect.Item1.ToString();
-            TxtScreenRectY.Text = settings.ScreenRect.Item2.ToString();
-            TxtScreenRectW.Text = settings.ScreenRect.Item3.ToString();
-            TxtScreenRectH.Text = settings.ScreenRect.Item4.ToString();
+            TxtScreenRectX.Text = settings.ScreenRect.Left.ToString();
+            TxtScreenRectY.Text = settings.ScreenRect.Top.ToString();
+            TxtScreenRectW.Text = settings.ScreenRect.Width.ToString();
+            TxtScreenRectH.Text = settings.ScreenRect.Height.ToString();
 
             TxtSavePath.Text = settings.SavePath;
             CkbHiddenWindow.Checked = settings.HiddenMainWindow;
@@ -153,11 +156,15 @@ namespace ScreenRecorder
             TxtBitrate.Text = settings.VideoBitrate.ToString();
             TxtFramerate.Text = settings.VideoFramerate.ToString();
 
-            TxtOverlayWidth.Text = settings.VideoOverlaysSize.Item1.ToString();
-            TxtOverlayHeight.Text = settings.VideoOverlaysSize.Item2.ToString();
+            TxtOverlayWidth.Text = settings.VideoOverlaysSize.Width.ToString();
+            TxtOverlayHeight.Text = settings.VideoOverlaysSize.Height.ToString();
 
-            TxtOverlayWidthOffset.Text = settings.VideoOverlaysOffset.Item1.ToString();
-            TxtOverlayHeightOffset.Text = settings.VideoOverlaysOffset.Item2.ToString();
+            TxtOverlayWidthOffset.Text = settings.VideoOverlaysOffset.Width.ToString();
+            TxtOverlayHeightOffset.Text = settings.VideoOverlaysOffset.Height.ToString();
+
+            CmbOverlaysCamera.SelectedIndex = 0;
+
+            CkbEnableOverlay.Checked = settings.EnableOverlay;
         }
 
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -188,8 +195,14 @@ namespace ScreenRecorder
             var rectW = int.Parse(TxtScreenRectW.Text);
             var rectH = int.Parse(TxtScreenRectH.Text);
 
-            Settings.ScreenRect = (rectX, rectY, rectW, rectH);
-            Settings.OutputFrameSize = (rectW, rectH);
+            Settings.ScreenRect = new Rect()
+            {
+                Left = rectX,
+                Top = rectY,
+                Width = rectW,
+                Height = rectH
+            };
+            Settings.OutputFrameSize = new Size() { Width = rectW, Height = rectH };
 
             if (CmbVideoQuality.SelectedIndex > 0)
             {
@@ -205,11 +218,13 @@ namespace ScreenRecorder
 
             int ovOffsetW = int.Parse(TxtOverlayWidthOffset.Text);
             int ovOffsetH = int.Parse(TxtOverlayHeightOffset.Text);
-            Settings.VideoOverlaysOffset = (ovOffsetW, ovOffsetH);
+            Settings.VideoOverlaysOffset = new Size() { Width = ovOffsetW, Height = ovOffsetH };
 
             int ovW = int.Parse(TxtOverlayWidth.Text);
             int ovH = int.Parse(TxtOverlayHeight.Text);
-            Settings.VideoOverlaysSize = (ovW, ovH);
+            Settings.VideoOverlaysSize = new Size() { Width = ovW, Height = ovH };
+
+            Settings.EnableOverlay = CkbEnableOverlay.Checked;
 
             SaveConfig();
         }

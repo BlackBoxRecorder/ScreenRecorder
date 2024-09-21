@@ -91,17 +91,17 @@ namespace ScreenRecorder
                 RecorderMode = RecorderMode.Video,
                 //This sets a custom size of the video output, in pixels.
                 OutputFrameSize = new ScreenSize(
-                    settings.OutputFrameSize.Item1,
-                    settings.OutputFrameSize.Item2
+                    settings.OutputFrameSize.Width,
+                    settings.OutputFrameSize.Height
                 ),
                 //Stretch controls how the resizing is done, if the new aspect ratio differs.
                 Stretch = StretchMode.Uniform,
                 //SourceRect allows you to crop the output.
                 SourceRect = new ScreenRect(
-                    settings.ScreenRect.Item1,
-                    settings.ScreenRect.Item2,
-                    settings.ScreenRect.Item3,
-                    settings.ScreenRect.Item4
+                    settings.ScreenRect.Left,
+                    settings.ScreenRect.Top,
+                    settings.ScreenRect.Width,
+                    settings.ScreenRect.Height
                 ),
             };
             options.AudioOptions = new AudioOptions
@@ -146,13 +146,13 @@ namespace ScreenRecorder
             {
                 Bitrate = settings.VideoBitrate * 1000,
                 Framerate = settings.VideoFramerate,
-                Quality = settings.VideoQualityIndex,
+                Quality = int.Parse(ConfigOptions.VideoQualityArray[settings.VideoQualityIndex]),
                 IsFixedFramerate = true,
                 //Currently supported are H264VideoEncoder and H265VideoEncoder
                 Encoder = encoder,
                 //Fragmented Mp4 allows playback to start at arbitrary positions inside a video stream,
                 //instead of requiring to read the headers at the start of the stream.
-                IsFragmentedMp4Enabled = true,
+                IsFragmentedMp4Enabled = false, //H265 需要为false
                 //If throttling is disabled, out of memory exceptions may eventually crash the program,
                 //depending on encoder settings and system specifications.
                 IsThrottlingDisabled = false,
@@ -176,23 +176,37 @@ namespace ScreenRecorder
                    Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
                 MouseClickDetectionMode = MouseDetectionMode.Hook
             };
-            options.OverlayOptions = new OverLayOptions
+            var ovDevice = GetVideoSourceByName(
+                RecordingSourceType.Camera,
+                settings.VideoOverlaysDevice
+            );
+
+            if (settings.EnableOverlay && ovDevice != null && ovDevice.Count > 0)
             {
-                //Populate and pass a list of recording overlays.
-                Overlays = new List<RecordingOverlayBase>
+                var dev = ovDevice[0] as RecordableCamera;
+                options.OverlayOptions = new OverLayOptions
                 {
-                    new VideoCaptureOverlay
+                    //Populate and pass a list of recording overlays.
+                    Overlays = new List<RecordingOverlayBase>
                     {
-                        AnchorPoint = (ScreenRecorderLib.Anchor)settings.VideoOverlaysPositionIndex,
-                        Offset = new ScreenSize(
-                            settings.VideoOverlaysOffset.Item1,
-                            settings.VideoOverlaysOffset.Item2
-                        ),
-                        Size = new ScreenSize(0, settings.VideoOverlaysSize.Item2),
-                        DeviceName = settings.VideoOverlaysDevice,
-                    }
-                },
-            };
+                        new VideoCaptureOverlay
+                        {
+                            AnchorPoint = (ScreenRecorderLib.Anchor)
+                                settings.VideoOverlaysPositionIndex,
+                            Offset = new ScreenSize(
+                                settings.VideoOverlaysOffset.Width,
+                                settings.VideoOverlaysOffset.Height
+                            ),
+                            Size = new ScreenSize(
+                                settings.VideoOverlaysSize.Width,
+                                settings.VideoOverlaysSize.Height
+                            ),
+                            DeviceName = dev.DeviceName,
+                        }
+                    },
+                };
+            }
+
             options.SnapshotOptions = new SnapshotOptions
             {
                 //Take a snapshot of the video output at the given interval

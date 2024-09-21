@@ -80,6 +80,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CmbOverlaysPosition = new System.Windows.Forms.ComboBox();
             this.CmbOverlaysCamera = new System.Windows.Forms.ComboBox();
+            this.CkbEnableOverlay = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -465,6 +466,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.CkbEnableOverlay);
             this.groupBox4.Controls.Add(this.TxtOverlayHeightOffset);
             this.groupBox4.Controls.Add(this.TxtOverlayHeight);
             this.groupBox4.Controls.Add(this.label18);
@@ -576,7 +578,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(218, 31);
+            this.label22.Location = new System.Drawing.Point(195, 31);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 17);
             this.label22.TabIndex = 1;
@@ -585,7 +587,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(21, 28);
+            this.label12.Location = new System.Drawing.Point(22, 31);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(44, 17);
             this.label12.TabIndex = 1;
@@ -595,7 +597,7 @@
             // 
             this.CmbOverlaysPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysPosition.FormattingEnabled = true;
-            this.CmbOverlaysPosition.Location = new System.Drawing.Point(291, 28);
+            this.CmbOverlaysPosition.Location = new System.Drawing.Point(257, 27);
             this.CmbOverlaysPosition.Name = "CmbOverlaysPosition";
             this.CmbOverlaysPosition.Size = new System.Drawing.Size(93, 25);
             this.CmbOverlaysPosition.TabIndex = 0;
@@ -604,10 +606,20 @@
             // 
             this.CmbOverlaysCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysCamera.FormattingEnabled = true;
-            this.CmbOverlaysCamera.Location = new System.Drawing.Point(94, 25);
+            this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 27);
             this.CmbOverlaysCamera.Name = "CmbOverlaysCamera";
             this.CmbOverlaysCamera.Size = new System.Drawing.Size(93, 25);
             this.CmbOverlaysCamera.TabIndex = 0;
+            // 
+            // CkbEnableOverlay
+            // 
+            this.CkbEnableOverlay.AutoSize = true;
+            this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
+            this.CkbEnableOverlay.Name = "CkbEnableOverlay";
+            this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
+            this.CkbEnableOverlay.TabIndex = 5;
+            this.CkbEnableOverlay.Text = "启用";
+            this.CkbEnableOverlay.UseVisualStyleBackColor = true;
             // 
             // SettingForm
             // 
@@ -691,5 +703,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox CmbOverlaysPosition;
         private System.Windows.Forms.ComboBox CmbRecordingSourceType;
+        private System.Windows.Forms.CheckBox CkbEnableOverlay;
     }
 }
