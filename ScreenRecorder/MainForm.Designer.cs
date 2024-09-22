@@ -33,6 +33,7 @@
             this.LblRecordDuration = new System.Windows.Forms.Label();
             this.LinkSettingForm = new System.Windows.Forms.LinkLabel();
             this.CkbTopMost = new System.Windows.Forms.CheckBox();
+            this.BtnDrawRect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnStartRecorder
@@ -91,11 +92,22 @@
             this.CkbTopMost.UseVisualStyleBackColor = true;
             this.CkbTopMost.CheckedChanged += new System.EventHandler(this.CkbTopMost_CheckedChanged);
             // 
+            // BtnDrawRect
+            // 
+            this.BtnDrawRect.Location = new System.Drawing.Point(125, 201);
+            this.BtnDrawRect.Name = "BtnDrawRect";
+            this.BtnDrawRect.Size = new System.Drawing.Size(75, 23);
+            this.BtnDrawRect.TabIndex = 8;
+            this.BtnDrawRect.Text = "选区";
+            this.BtnDrawRect.UseVisualStyleBackColor = true;
+            this.BtnDrawRect.Click += new System.EventHandler(this.BtnDrawRect_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 249);
+            this.Controls.Add(this.BtnDrawRect);
             this.Controls.Add(this.CkbTopMost);
             this.Controls.Add(this.LinkSettingForm);
             this.Controls.Add(this.LblRecordDuration);
@@ -117,6 +129,7 @@
         private System.Windows.Forms.Label LblRecordDuration;
         private System.Windows.Forms.LinkLabel LinkSettingForm;
         private System.Windows.Forms.CheckBox CkbTopMost;
+        private System.Windows.Forms.Button BtnDrawRect;
     }
 }
 

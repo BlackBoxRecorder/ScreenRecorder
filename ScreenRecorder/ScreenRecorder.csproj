@@ -104,12 +104,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenPop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenPop.Designer.cs">
+      <DependentUpon>ScreenPop.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +129,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ScreenPop.resx">
+      <DependentUpon>ScreenPop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>

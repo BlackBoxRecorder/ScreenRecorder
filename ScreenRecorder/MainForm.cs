@@ -416,5 +416,25 @@ namespace ScreenRecorder
                 TopMost = false;
             }
         }
+
+        private void BtnDrawRect_Click(object sender, EventArgs e)
+        {
+            var bmp = Utils.TakeScreenshot();
+
+            var pop = new ScreenPop();
+            pop.BackgroundImage = bmp;
+
+            pop.ShowDialog();
+            var region = pop.SelectRegion;
+            settings.ScreenRect = new Rect
+            {
+                Top = region.Y,
+                Left = region.X,
+                Width = region.Width,
+                Height = region.Height
+            };
+
+            bmp.Dispose();
+        }
     }
 }

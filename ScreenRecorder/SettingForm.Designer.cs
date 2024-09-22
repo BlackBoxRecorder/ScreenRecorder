@@ -46,7 +46,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.TxtScreenRectH = new System.Windows.Forms.TextBox();
             this.TxtScreenRectW = new System.Windows.Forms.TextBox();
-            this.BtnDrawRect = new System.Windows.Forms.Button();
             this.TxtScreenRectX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -66,6 +65,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.CkbEnableOverlay = new System.Windows.Forms.CheckBox();
             this.TxtOverlayHeightOffset = new System.Windows.Forms.TextBox();
             this.TxtOverlayHeight = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -80,7 +80,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CmbOverlaysPosition = new System.Windows.Forms.ComboBox();
             this.CmbOverlaysCamera = new System.Windows.Forms.ComboBox();
-            this.CkbEnableOverlay = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -108,9 +107,9 @@
             this.groupBox2.Controls.Add(this.TxtSavePath);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 24);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(399, 316);
+            this.groupBox2.Size = new System.Drawing.Size(399, 286);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "视频录制";
@@ -213,6 +212,7 @@
             this.BtnSelectSavePath.TabIndex = 8;
             this.BtnSelectSavePath.Text = "浏览";
             this.BtnSelectSavePath.UseVisualStyleBackColor = true;
+            this.BtnSelectSavePath.Click += new System.EventHandler(this.BtnSelectSavePath_Click);
             // 
             // groupBox3
             // 
@@ -221,13 +221,12 @@
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.TxtScreenRectH);
             this.groupBox3.Controls.Add(this.TxtScreenRectW);
-            this.groupBox3.Controls.Add(this.BtnDrawRect);
             this.groupBox3.Controls.Add(this.TxtScreenRectX);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Location = new System.Drawing.Point(19, 199);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(367, 104);
+            this.groupBox3.Size = new System.Drawing.Size(367, 69);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "录制范围";
@@ -235,7 +234,7 @@
             // TxtScreenRectY
             // 
             this.TxtScreenRectY.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectY.Location = new System.Drawing.Point(171, 29);
+            this.TxtScreenRectY.Location = new System.Drawing.Point(102, 29);
             this.TxtScreenRectY.Name = "TxtScreenRectY";
             this.TxtScreenRectY.Size = new System.Drawing.Size(46, 23);
             this.TxtScreenRectY.TabIndex = 10;
@@ -244,7 +243,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(42, 32);
+            this.label9.Location = new System.Drawing.Point(9, 32);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 17);
             this.label9.TabIndex = 1;
@@ -254,7 +253,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(153, 32);
+            this.label10.Location = new System.Drawing.Point(84, 32);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(15, 17);
             this.label10.TabIndex = 1;
@@ -263,7 +262,7 @@
             // TxtScreenRectH
             // 
             this.TxtScreenRectH.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectH.Location = new System.Drawing.Point(171, 67);
+            this.TxtScreenRectH.Location = new System.Drawing.Point(303, 29);
             this.TxtScreenRectH.Name = "TxtScreenRectH";
             this.TxtScreenRectH.Size = new System.Drawing.Size(46, 23);
             this.TxtScreenRectH.TabIndex = 12;
@@ -271,25 +270,15 @@
             // TxtScreenRectW
             // 
             this.TxtScreenRectW.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectW.Location = new System.Drawing.Point(62, 67);
+            this.TxtScreenRectW.Location = new System.Drawing.Point(201, 29);
             this.TxtScreenRectW.Name = "TxtScreenRectW";
             this.TxtScreenRectW.Size = new System.Drawing.Size(46, 23);
             this.TxtScreenRectW.TabIndex = 11;
             // 
-            // BtnDrawRect
-            // 
-            this.BtnDrawRect.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.BtnDrawRect.Location = new System.Drawing.Point(256, 32);
-            this.BtnDrawRect.Name = "BtnDrawRect";
-            this.BtnDrawRect.Size = new System.Drawing.Size(91, 58);
-            this.BtnDrawRect.TabIndex = 13;
-            this.BtnDrawRect.Text = "选择区域";
-            this.BtnDrawRect.UseVisualStyleBackColor = true;
-            // 
             // TxtScreenRectX
             // 
             this.TxtScreenRectX.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectX.Location = new System.Drawing.Point(62, 29);
+            this.TxtScreenRectX.Location = new System.Drawing.Point(29, 29);
             this.TxtScreenRectX.Name = "TxtScreenRectX";
             this.TxtScreenRectX.Size = new System.Drawing.Size(46, 23);
             this.TxtScreenRectX.TabIndex = 9;
@@ -298,7 +287,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(124, 70);
+            this.label8.Location = new System.Drawing.Point(256, 32);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 17);
             this.label8.TabIndex = 1;
@@ -308,7 +297,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(20, 70);
+            this.label6.Location = new System.Drawing.Point(159, 32);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 17);
             this.label6.TabIndex = 1;
@@ -363,7 +352,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 346);
+            this.groupBox1.Location = new System.Drawing.Point(12, 306);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(399, 123);
             this.groupBox1.TabIndex = 10;
@@ -482,12 +471,22 @@
             this.groupBox4.Controls.Add(this.CmbOverlaysPosition);
             this.groupBox4.Controls.Add(this.CmbOverlaysCamera);
             this.groupBox4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox4.Location = new System.Drawing.Point(12, 478);
+            this.groupBox4.Location = new System.Drawing.Point(12, 435);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(399, 129);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "摄像头水印";
+            // 
+            // CkbEnableOverlay
+            // 
+            this.CkbEnableOverlay.AutoSize = true;
+            this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
+            this.CkbEnableOverlay.Name = "CkbEnableOverlay";
+            this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
+            this.CkbEnableOverlay.TabIndex = 26;
+            this.CkbEnableOverlay.Text = "启用";
+            this.CkbEnableOverlay.UseVisualStyleBackColor = true;
             // 
             // TxtOverlayHeightOffset
             // 
@@ -611,21 +610,11 @@
             this.CmbOverlaysCamera.Size = new System.Drawing.Size(93, 25);
             this.CmbOverlaysCamera.TabIndex = 20;
             // 
-            // CkbEnableOverlay
-            // 
-            this.CkbEnableOverlay.AutoSize = true;
-            this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
-            this.CkbEnableOverlay.Name = "CkbEnableOverlay";
-            this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
-            this.CkbEnableOverlay.TabIndex = 26;
-            this.CkbEnableOverlay.Text = "启用";
-            this.CkbEnableOverlay.UseVisualStyleBackColor = true;
-            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 622);
+            this.ClientSize = new System.Drawing.Size(425, 575);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -656,7 +645,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TxtSavePath;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button BtnDrawRect;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox CkbEnableAudioOutput;
         private System.Windows.Forms.CheckBox CkbEnableAudioInput;

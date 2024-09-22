@@ -342,5 +342,29 @@ namespace ScreenRecorder
 
             return -1;
         }
+
+        private void BtnSelectSavePath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+
+            folderBrowserDialog.Description = "请选择一个文件夹";
+            folderBrowserDialog.ShowNewFolderButton = true; // 是否显示新建文件夹按钮
+            DialogResult result = folderBrowserDialog.ShowDialog();
+
+            if (
+                result == DialogResult.OK
+                && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath)
+            )
+            {
+                // 用户选择了文件夹，获取路径
+                string folderPath = folderBrowserDialog.SelectedPath;
+                TxtSavePath.Text = folderPath;
+            }
+        }
+
+        private void BtnDrawRect_Click(object sender, EventArgs e)
+        {
+            //截取屏幕截图并最大化，让用户绘制一个区域
+        }
     }
 }
