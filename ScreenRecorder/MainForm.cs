@@ -21,6 +21,7 @@ namespace ScreenRecorder
 
         private Recorder recorder;
         private AppSettings settings;
+        private int snapshotCount = 0;
 
         public MainForm()
         {
@@ -37,6 +38,7 @@ namespace ScreenRecorder
 
             CreateRecording();
 
+            snapshotCount = 0;
             isRecording = true;
             sw.Restart();
             UpdateRecordDuration();
@@ -293,6 +295,7 @@ namespace ScreenRecorder
                     Console.WriteLine(filePath);
                     CleanupResources();
 
+                    LblSnapshotCount.Visible = false;
                     var btnRes = MessageBox.Show("是否打开视频目录？", "录制完成", MessageBoxButtons.YesNo);
                     if (btnRes == DialogResult.Yes)
                     {
@@ -405,10 +408,16 @@ namespace ScreenRecorder
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
-            recorder?.TakeSnapshot();
-            //todo 没有录屏也可以截图
-            //todo OCR
-            //todo 提取指定位置字幕
+            if (recorder != null)
+            {
+                bool success = recorder.TakeSnapshot();
+                if (success)
+                {
+                    snapshotCount++;
+                    LblSnapshotCount.Visible = true;
+                    LblSnapshotCount.Text = $"截图：{snapshotCount}张";
+                }
+            }
         }
 
         private void BtnAbout_Click(object sender, EventArgs e)

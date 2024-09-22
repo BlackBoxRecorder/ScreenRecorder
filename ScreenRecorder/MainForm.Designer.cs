@@ -37,6 +37,7 @@
             this.BtnSnapshot = new System.Windows.Forms.Button();
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnAbout = new System.Windows.Forms.Button();
+            this.LblSnapshotCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BtnStartRecorder
@@ -90,7 +91,7 @@
             this.BtnDrawRect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BtnDrawRect.FlatAppearance.BorderSize = 0;
             this.BtnDrawRect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDrawRect.Location = new System.Drawing.Point(46, 192);
+            this.BtnDrawRect.Location = new System.Drawing.Point(46, 189);
             this.BtnDrawRect.Name = "BtnDrawRect";
             this.BtnDrawRect.Size = new System.Drawing.Size(32, 32);
             this.BtnDrawRect.TabIndex = 8;
@@ -136,12 +137,23 @@
             this.BtnAbout.UseVisualStyleBackColor = true;
             this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
             // 
+            // LblSnapshotCount
+            // 
+            this.LblSnapshotCount.AutoSize = true;
+            this.LblSnapshotCount.Location = new System.Drawing.Point(103, 245);
+            this.LblSnapshotCount.Name = "LblSnapshotCount";
+            this.LblSnapshotCount.Size = new System.Drawing.Size(59, 12);
+            this.LblSnapshotCount.TabIndex = 10;
+            this.LblSnapshotCount.Text = "截图：1张";
+            this.LblSnapshotCount.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(294, 281);
+            this.Controls.Add(this.LblSnapshotCount);
             this.Controls.Add(this.BtnAbout);
             this.Controls.Add(this.BtnSettings);
             this.Controls.Add(this.BtnSnapshot);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.Button BtnSnapshot;
         private System.Windows.Forms.Button BtnSettings;
         private System.Windows.Forms.Button BtnAbout;
+        private System.Windows.Forms.Label LblSnapshotCount;
     }
 }
 

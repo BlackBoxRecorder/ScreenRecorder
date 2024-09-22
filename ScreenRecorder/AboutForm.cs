@@ -15,6 +15,7 @@ namespace ScreenRecorder
         public AboutForm()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterParent;
         }
     }
 }
