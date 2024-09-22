@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ScreenRecorderLib;
 
 namespace ScreenRecorder
 {
@@ -40,6 +42,91 @@ namespace ScreenRecorder
             Bitmap clonedBitmap = sourceBitmap.Clone(sourceRegion, sourceBitmap.PixelFormat);
 
             return clonedBitmap;
+        }
+
+        public static List<RecordingSourceBase> GetVideoSourceByName(
+            RecordingSourceType type,
+            string name
+        )
+        {
+            var src = new List<RecordingSourceBase>();
+
+            switch (type)
+            {
+                case RecordingSourceType.Monitor:
+                    foreach (var monitor in Recorder.GetDisplays())
+                    {
+                        if (monitor.FriendlyName == name)
+                        {
+                            src.Add(monitor);
+                            break;
+                        }
+                    }
+                    break;
+                case RecordingSourceType.Window:
+                    foreach (var window in Recorder.GetWindows())
+                    {
+                        if (
+                            window.IsValidWindow()
+                            && window.IsVideoCaptureEnabled
+                            && window.Title == name
+                        )
+                        {
+                            src.Add(window);
+                            break;
+                        }
+                    }
+                    break;
+                case RecordingSourceType.Camera:
+                    foreach (var device in Recorder.GetSystemVideoCaptureDevices())
+                    {
+                        if (device.FriendlyName == name)
+                        {
+                            src.Add(device);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return src;
+        }
+
+        public static string GetAppVersion()
+        {
+            string date = "";
+            string hash = "";
+            string branch = "";
+
+            try
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var gitVersionInformationType = assembly.GetType("GitVersionInformation");
+                var fields = gitVersionInformationType.GetFields();
+
+                foreach (var field in fields)
+                {
+                    if (field.Name == "CommitDate")
+                    {
+                        date = field.GetValue(null).ToString();
+                    }
+                    if (field.Name == "ShortSha")
+                    {
+                        hash = field.GetValue(null).ToString();
+                    }
+                    if (field.Name == "SemVer")
+                    {
+                        branch = field.GetValue(null).ToString();
+                    }
+                }
+                return $"{branch}-{hash} @{date}";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "";
+            }
         }
     }
 }

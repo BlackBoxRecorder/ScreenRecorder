@@ -25,17 +25,9 @@ namespace ScreenRecorder
         public MainForm()
         {
             InitializeComponent();
-            BtnPauseRecorder.Visible = false;
-            BtnPauseRecorder.Text = "暂停录制";
-            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void BtnStartRecorder_Click(object sender, EventArgs e)
-        {
-            StartRecording();
-        }
-
-        private void StartRecording()
         {
             if (isRecording)
             {
@@ -71,8 +63,15 @@ namespace ScreenRecorder
             recorder.OnRecordingComplete += Recorder_OnRecordingComplete;
             recorder.OnRecordingFailed += Recorder_OnRecordingFailed;
             recorder.OnStatusChanged += Recorder_OnStatusChanged;
+            recorder.OnSnapshotSaved += Recorder_OnSnapshotSaved;
 
             recorder.Record(videoPath);
+        }
+
+        private void Recorder_OnSnapshotSaved(object sender, SnapshotSavedEventArgs e)
+        {
+            string filepath = e.SnapshotPath;
+            Console.WriteLine(filepath);
         }
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace ScreenRecorder
             options.SourceOptions = new SourceOptions
             {
                 //Populate and pass a list of recordingsources.
-                RecordingSources = GetVideoSourceByName(
+                RecordingSources = Utils.GetVideoSourceByName(
                     (RecordingSourceType)settings.VideoSourceTypeIndex,
                     settings.VideoSourceName
                 )
@@ -182,7 +181,7 @@ namespace ScreenRecorder
                    Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
                 MouseClickDetectionMode = MouseDetectionMode.Hook
             };
-            var ovDevice = GetVideoSourceByName(
+            var ovDevice = Utils.GetVideoSourceByName(
                 RecordingSourceType.Camera,
                 settings.VideoOverlaysDevice
             );
@@ -233,55 +232,6 @@ namespace ScreenRecorder
             };
 
             return options;
-        }
-
-        private static List<RecordingSourceBase> GetVideoSourceByName(
-            RecordingSourceType type,
-            string name
-        )
-        {
-            var src = new List<RecordingSourceBase>();
-
-            switch (type)
-            {
-                case RecordingSourceType.Monitor:
-                    foreach (var monitor in Recorder.GetDisplays())
-                    {
-                        if (monitor.FriendlyName == name)
-                        {
-                            src.Add(monitor);
-                            break;
-                        }
-                    }
-                    break;
-                case RecordingSourceType.Window:
-                    foreach (var window in Recorder.GetWindows())
-                    {
-                        if (
-                            window.IsValidWindow()
-                            && window.IsVideoCaptureEnabled
-                            && window.Title == name
-                        )
-                        {
-                            src.Add(window);
-                            break;
-                        }
-                    }
-                    break;
-                case RecordingSourceType.Camera:
-                    foreach (var device in Recorder.GetSystemVideoCaptureDevices())
-                    {
-                        if (device.FriendlyName == name)
-                        {
-                            src.Add(device);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return src;
         }
 
         private void Recorder_OnStatusChanged(object sender, RecordingStatusEventArgs e)
@@ -364,6 +314,8 @@ namespace ScreenRecorder
         private void MainForm_Load(object sender, EventArgs e)
         {
             settings = AppSettings.LoadConfig();
+
+            var str = Utils.GetAppVersion();
         }
 
         private void UpdateRecordDuration()
@@ -449,6 +401,20 @@ namespace ScreenRecorder
             };
 
             bmp.Dispose();
+        }
+
+        private void BtnSnapshot_Click(object sender, EventArgs e)
+        {
+            recorder?.TakeSnapshot();
+            //todo 没有录屏也可以截图
+            //todo OCR
+            //todo 提取指定位置字幕
+        }
+
+        private void BtnAbout_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
         }
     }
 }
