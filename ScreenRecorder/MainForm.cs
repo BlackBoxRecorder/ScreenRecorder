@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -16,8 +17,7 @@ namespace ScreenRecorder
     public partial class MainForm : Form
     {
         private bool isRecording = false;
-        private System.Timers.Timer timer = new System.Timers.Timer();
-        private DateTime startTime;
+        private readonly Stopwatch sw = new Stopwatch();
 
         private Recorder recorder;
         private AppSettings settings = new AppSettings();
@@ -40,15 +40,14 @@ namespace ScreenRecorder
             if (isRecording)
             {
                 recorder.Stop();
-                timer.Stop();
                 return;
             }
 
             CreateRecording();
 
             isRecording = true;
-            startTime = DateTime.Now;
-            timer.Start();
+            sw.Restart();
+            UpdateRecordDuration();
         }
 
         private void CreateRecording()
@@ -293,15 +292,19 @@ namespace ScreenRecorder
                     switch (e.Status)
                     {
                         case RecorderStatus.Recording:
-                            if (timer != null)
-                                timer.Enabled = true;
+                            if (!sw.IsRunning)
+                            {
+                                sw.Start();
+                            }
                             BtnStartRecorder.Text = "停止录制";
                             BtnPauseRecorder.Visible = true;
                             BtnPauseRecorder.Text = "暂停录制";
                             break;
                         case RecorderStatus.Paused:
-                            if (timer != null)
-                                timer.Enabled = false;
+                            if (sw.IsRunning)
+                            {
+                                sw.Stop();
+                            }
                             BtnPauseRecorder.Text = "继续录制";
                             break;
                         case RecorderStatus.Finishing:
@@ -345,7 +348,8 @@ namespace ScreenRecorder
 
         private void CleanupResources()
         {
-            timer.Stop();
+            sw.Reset();
+            sw.Stop();
             LblRecordDuration.Text = "00:00:00";
             recorder?.Dispose();
             recorder = null;
@@ -353,26 +357,29 @@ namespace ScreenRecorder
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            timer.Elapsed += Timer_Elapsed;
             settings = AppSettings.LoadConfig();
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void UpdateRecordDuration()
         {
-            var now = DateTime.Now;
-            TimeSpan duration = now - startTime;
-            this.Invoke(
-                new Action(() =>
+            Task.Run(async () =>
+            {
+                while (isRecording)
                 {
-                    LblRecordDuration.Text = duration.ToString(@"hh\:mm\:ss");
-                })
-            );
+                    this.Invoke(
+                        new Action(() =>
+                        {
+                            LblRecordDuration.Text = sw.Elapsed.ToString(@"hh\:mm\:ss");
+                        })
+                    );
+                    await Task.Delay(500);
+                }
+            });
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             recorder?.Stop();
-            timer.Close();
             recorder?.Dispose();
         }
 
@@ -382,10 +389,12 @@ namespace ScreenRecorder
             {
                 return;
             }
+
             switch (recorder.Status)
             {
                 case RecorderStatus.Recording:
                     recorder.Pause();
+
                     break;
                 case RecorderStatus.Paused:
                     recorder.Resume();
