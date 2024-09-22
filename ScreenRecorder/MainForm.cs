@@ -20,7 +20,7 @@ namespace ScreenRecorder
         private readonly Stopwatch sw = new Stopwatch();
 
         private Recorder recorder;
-        private AppSettings settings = new AppSettings();
+        private AppSettings settings;
 
         public MainForm()
         {
@@ -309,6 +309,9 @@ namespace ScreenRecorder
                             break;
                         case RecorderStatus.Finishing:
                             BtnPauseRecorder.Visible = false;
+                            BtnStartRecorder.Text = "开始录制";
+
+                            isRecording = false;
                             break;
                         default:
                             break;
@@ -338,10 +341,13 @@ namespace ScreenRecorder
                 {
                     string filePath = e.FilePath;
                     Console.WriteLine(filePath);
-                    BtnPauseRecorder.Visible = false;
-                    BtnStartRecorder.Text = "开始录制";
-                    isRecording = false;
                     CleanupResources();
+
+                    var btnRes = MessageBox.Show("是否打开视频目录？", "录制完成", MessageBoxButtons.YesNo);
+                    if (btnRes == DialogResult.Yes)
+                    {
+                        Process.Start(Path.GetDirectoryName(filePath));
+                    }
                 })
             );
         }
@@ -394,7 +400,6 @@ namespace ScreenRecorder
             {
                 case RecorderStatus.Recording:
                     recorder.Pause();
-
                     break;
                 case RecorderStatus.Paused:
                     recorder.Resume();
@@ -432,8 +437,8 @@ namespace ScreenRecorder
 
             var pop = new ScreenPop();
             pop.BackgroundImage = bmp;
-
             pop.ShowDialog();
+
             var region = pop.SelectRegion;
             settings.ScreenRect = new Rect
             {
