@@ -21,11 +21,34 @@ namespace ScreenRecorder
 
         private Recorder recorder;
         private AppSettings settings;
-        private int snapshotCount = 0;
 
         public MainForm()
         {
             InitializeComponent();
+
+            Width = 280;
+            Height = 260;
+
+            LblRecordDuration.Location = new Point(
+                (this.Width - LblRecordDuration.Width - 12) / 2,
+                10
+            );
+
+            BtnStartRecorder.Location = new Point(
+                (this.Width - BtnStartRecorder.Width - 16) / 2,
+                60
+            );
+            BtnPauseRecorder.Location = new Point(
+                (this.Width - BtnPauseRecorder.Width - 16) / 2,
+                105
+            );
+
+            tableLayoutPanel1.Location = new Point(
+                (this.Width - tableLayoutPanel1.Width - 4) / 2,
+                160
+            );
+
+            this.TopMost = true;
         }
 
         private void BtnStartRecorder_Click(object sender, EventArgs e)
@@ -38,7 +61,6 @@ namespace ScreenRecorder
 
             CreateRecording();
 
-            snapshotCount = 0;
             isRecording = true;
             sw.Restart();
             UpdateRecordDuration();
@@ -295,7 +317,6 @@ namespace ScreenRecorder
                     Console.WriteLine(filePath);
                     CleanupResources();
 
-                    LblSnapshotCount.Visible = false;
                     var btnRes = MessageBox.Show("是否打开视频目录？", "录制完成", MessageBoxButtons.YesNo);
                     if (btnRes == DialogResult.Yes)
                     {
@@ -317,8 +338,6 @@ namespace ScreenRecorder
         private void MainForm_Load(object sender, EventArgs e)
         {
             settings = AppSettings.LoadConfig();
-
-            var str = Utils.GetAppVersion();
         }
 
         private void UpdateRecordDuration()
@@ -369,25 +388,16 @@ namespace ScreenRecorder
 
         private void LinkSettingForm_Click(object sender, EventArgs e)
         {
+            this.TopMost = false;
             var settingForm = new SettingForm();
             settingForm.ShowDialog();
             settings = settingForm.Settings;
-        }
-
-        private void CkbTopMost_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CkbTopMost.Checked)
-            {
-                TopMost = true;
-            }
-            else
-            {
-                TopMost = false;
-            }
+            this.TopMost = true;
         }
 
         private void BtnDrawRect_Click(object sender, EventArgs e)
         {
+            TopMost = false;
             var bmp = Utils.TakeScreenshot();
 
             var pop = new ScreenPop();
@@ -404,26 +414,21 @@ namespace ScreenRecorder
             };
 
             bmp.Dispose();
+            TopMost = true;
         }
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
-            if (recorder != null)
-            {
-                bool success = recorder.TakeSnapshot();
-                if (success)
-                {
-                    snapshotCount++;
-                    LblSnapshotCount.Visible = true;
-                    LblSnapshotCount.Text = $"截图：{snapshotCount}张";
-                }
-            }
+            recorder?.TakeSnapshot();
         }
 
         private void BtnAbout_Click(object sender, EventArgs e)
         {
+            this.TopMost = false;
             var aboutForm = new AboutForm();
+            aboutForm.Version = Utils.GetAppVersion();
             aboutForm.ShowDialog();
+            this.TopMost = true;
         }
     }
 }

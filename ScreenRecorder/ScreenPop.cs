@@ -10,6 +10,8 @@ namespace ScreenRecorder
         {
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
+            MinimizeBox = false;
+            MaximizeBox = false;
             Text = "预览";
         }
 
