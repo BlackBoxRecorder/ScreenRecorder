@@ -76,6 +76,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CmbOverlaysPosition = new System.Windows.Forms.ComboBox();
             this.CmbOverlaysCamera = new System.Windows.Forms.ComboBox();
+            this.CkbEnableMousePoint = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -412,6 +413,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.CkbEnableMousePoint);
             this.groupBox4.Controls.Add(this.CkbEnableOverlay);
             this.groupBox4.Controls.Add(this.TxtOverlayHeightOffset);
             this.groupBox4.Controls.Add(this.TxtOverlayHeight);
@@ -433,16 +435,16 @@
             this.groupBox4.Size = new System.Drawing.Size(399, 129);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "摄像头水印";
+            this.groupBox4.Text = "水印";
             // 
             // CkbEnableOverlay
             // 
             this.CkbEnableOverlay.AutoSize = true;
-            this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
+            this.CkbEnableOverlay.Location = new System.Drawing.Point(269, 60);
             this.CkbEnableOverlay.Name = "CkbEnableOverlay";
-            this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
+            this.CkbEnableOverlay.Size = new System.Drawing.Size(111, 21);
             this.CkbEnableOverlay.TabIndex = 26;
-            this.CkbEnableOverlay.Text = "启用";
+            this.CkbEnableOverlay.Text = "启用摄像头水印";
             this.CkbEnableOverlay.UseVisualStyleBackColor = true;
             // 
             // TxtOverlayHeightOffset
@@ -534,7 +536,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(195, 31);
+            this.label22.Location = new System.Drawing.Point(195, 28);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 17);
             this.label22.TabIndex = 1;
@@ -543,7 +545,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(22, 31);
+            this.label12.Location = new System.Drawing.Point(22, 28);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(44, 17);
             this.label12.TabIndex = 1;
@@ -553,7 +555,7 @@
             // 
             this.CmbOverlaysPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysPosition.FormattingEnabled = true;
-            this.CmbOverlaysPosition.Location = new System.Drawing.Point(257, 27);
+            this.CmbOverlaysPosition.Location = new System.Drawing.Point(257, 24);
             this.CmbOverlaysPosition.Name = "CmbOverlaysPosition";
             this.CmbOverlaysPosition.Size = new System.Drawing.Size(93, 25);
             this.CmbOverlaysPosition.TabIndex = 21;
@@ -562,10 +564,20 @@
             // 
             this.CmbOverlaysCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysCamera.FormattingEnabled = true;
-            this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 27);
+            this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 24);
             this.CmbOverlaysCamera.Name = "CmbOverlaysCamera";
             this.CmbOverlaysCamera.Size = new System.Drawing.Size(93, 25);
             this.CmbOverlaysCamera.TabIndex = 20;
+            // 
+            // CkbEnableMousePoint
+            // 
+            this.CkbEnableMousePoint.AutoSize = true;
+            this.CkbEnableMousePoint.Location = new System.Drawing.Point(269, 90);
+            this.CkbEnableMousePoint.Name = "CkbEnableMousePoint";
+            this.CkbEnableMousePoint.Size = new System.Drawing.Size(99, 21);
+            this.CkbEnableMousePoint.TabIndex = 26;
+            this.CkbEnableMousePoint.Text = "启用鼠标点击";
+            this.CkbEnableMousePoint.UseVisualStyleBackColor = true;
             // 
             // SettingForm
             // 
@@ -643,5 +655,6 @@
         private System.Windows.Forms.ComboBox CmbOverlaysPosition;
         private System.Windows.Forms.ComboBox CmbRecordingSourceType;
         private System.Windows.Forms.CheckBox CkbEnableOverlay;
+        private System.Windows.Forms.CheckBox CkbEnableMousePoint;
     }
 }

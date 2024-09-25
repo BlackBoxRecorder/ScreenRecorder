@@ -190,19 +190,23 @@ namespace ScreenRecorder
                 //Fast start writes the mp4 header at the beginning of the file, to facilitate streaming.
                 IsMp4FastStartEnabled = false
             };
-            options.MouseOptions = new MouseOptions
+            if (settings.EnableMousePoint)
             {
-                //Displays a colored dot under the mouse cursor when the left mouse button is pressed.
-                IsMouseClicksDetected = true,
-                MouseLeftClickDetectionColor = "#FFFF00",
-                MouseRightClickDetectionColor = "#FFFF00",
-                MouseClickDetectionRadius = 30,
-                MouseClickDetectionDuration = 100,
-                IsMousePointerEnabled = true,
-                /* Polling checks every millisecond if a mouse button is pressed.
-                   Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
-                MouseClickDetectionMode = MouseDetectionMode.Hook
-            };
+                options.MouseOptions = new MouseOptions
+                {
+                    //Displays a colored dot under the mouse cursor when the left mouse button is pressed.
+                    IsMouseClicksDetected = true,
+                    MouseLeftClickDetectionColor = "#FFFF00",
+                    MouseRightClickDetectionColor = "#FFFF00",
+                    MouseClickDetectionRadius = 30,
+                    MouseClickDetectionDuration = 100,
+                    IsMousePointerEnabled = true,
+                    /* Polling checks every millisecond if a mouse button is pressed.
+                       Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
+                    MouseClickDetectionMode = MouseDetectionMode.Hook
+                };
+            }
+
             var ovDevice = Utils.GetVideoSourceByName(
                 RecordingSourceType.Camera,
                 settings.VideoOverlaysDevice

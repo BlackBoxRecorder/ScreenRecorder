@@ -188,6 +188,7 @@ namespace ScreenRecorder
             Settings.VideoOverlaysSize = new Size() { Width = ovW, Height = ovH };
 
             Settings.EnableOverlay = CkbEnableOverlay.Checked;
+            Settings.EnableMousePoint = CkbEnableMousePoint.Checked;
 
             AppSettings.SaveConfig(Settings);
         }
