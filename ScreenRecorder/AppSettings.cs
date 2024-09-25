@@ -150,16 +150,6 @@ namespace ScreenRecorder
         /// 输出设备的名称，扬声器
         /// </summary>
         public string AudioOutputDevice { get; set; }
-
-        /// <summary>
-        /// 麦克风音量
-        /// </summary>
-        public int AudioInputVolume { get; set; } = 50;
-
-        /// <summary>
-        /// 扬声器音量
-        /// </summary>
-        public int AudioOutputVolume { get; set; } = 50;
     }
 
     public static class ConfigOptions

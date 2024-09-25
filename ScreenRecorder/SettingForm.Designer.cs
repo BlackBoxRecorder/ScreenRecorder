@@ -54,15 +54,11 @@
             this.TxtSavePath = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.TrbAudioOutputVolumn = new System.Windows.Forms.NumericUpDown();
-            this.TrbAudioInputVolumn = new System.Windows.Forms.NumericUpDown();
             this.CkbEnableAudioOutput = new System.Windows.Forms.CheckBox();
             this.CkbEnableAudioInput = new System.Windows.Forms.CheckBox();
             this.CmbAudioOutputDevice = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.CmbAudioInputDevice = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.CkbEnableOverlay = new System.Windows.Forms.CheckBox();
@@ -83,8 +79,6 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrbAudioOutputVolumn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrbAudioInputVolumn)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -311,6 +305,7 @@
             this.CmbVideoSource.Name = "CmbVideoSource";
             this.CmbVideoSource.Size = new System.Drawing.Size(190, 25);
             this.CmbVideoSource.TabIndex = 1;
+            this.CmbVideoSource.SelectedIndexChanged += new System.EventHandler(this.CmbVideoSource_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -341,15 +336,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.TrbAudioOutputVolumn);
-            this.groupBox1.Controls.Add(this.TrbAudioInputVolumn);
             this.groupBox1.Controls.Add(this.CkbEnableAudioOutput);
             this.groupBox1.Controls.Add(this.CkbEnableAudioInput);
             this.groupBox1.Controls.Add(this.CmbAudioOutputDevice);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.CmbAudioInputDevice);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(12, 306);
@@ -358,20 +349,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "音频录制";
-            // 
-            // TrbAudioOutputVolumn
-            // 
-            this.TrbAudioOutputVolumn.Location = new System.Drawing.Point(340, 86);
-            this.TrbAudioOutputVolumn.Name = "TrbAudioOutputVolumn";
-            this.TrbAudioOutputVolumn.Size = new System.Drawing.Size(46, 23);
-            this.TrbAudioOutputVolumn.TabIndex = 19;
-            // 
-            // TrbAudioInputVolumn
-            // 
-            this.TrbAudioInputVolumn.Location = new System.Drawing.Point(340, 57);
-            this.TrbAudioInputVolumn.Name = "TrbAudioInputVolumn";
-            this.TrbAudioInputVolumn.Size = new System.Drawing.Size(46, 23);
-            this.TrbAudioInputVolumn.TabIndex = 18;
             // 
             // CkbEnableAudioOutput
             // 
@@ -400,7 +377,7 @@
             this.CmbAudioOutputDevice.FormattingEnabled = true;
             this.CmbAudioOutputDevice.Location = new System.Drawing.Point(117, 86);
             this.CmbAudioOutputDevice.Name = "CmbAudioOutputDevice";
-            this.CmbAudioOutputDevice.Size = new System.Drawing.Size(164, 25);
+            this.CmbAudioOutputDevice.Size = new System.Drawing.Size(247, 25);
             this.CmbAudioOutputDevice.TabIndex = 17;
             // 
             // label1
@@ -413,16 +390,6 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "音频输入设备";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(300, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 17);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "音量";
-            // 
             // CmbAudioInputDevice
             // 
             this.CmbAudioInputDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -430,18 +397,8 @@
             this.CmbAudioInputDevice.FormattingEnabled = true;
             this.CmbAudioInputDevice.Location = new System.Drawing.Point(117, 55);
             this.CmbAudioInputDevice.Name = "CmbAudioInputDevice";
-            this.CmbAudioInputDevice.Size = new System.Drawing.Size(164, 25);
+            this.CmbAudioInputDevice.Size = new System.Drawing.Size(247, 25);
             this.CmbAudioInputDevice.TabIndex = 16;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(300, 92);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 17);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "音量";
             // 
             // label2
             // 
@@ -630,8 +587,6 @@
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TrbAudioOutputVolumn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrbAudioInputVolumn)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -650,9 +605,7 @@
         private System.Windows.Forms.CheckBox CkbEnableAudioInput;
         private System.Windows.Forms.ComboBox CmbAudioOutputDevice;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox CmbAudioInputDevice;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox CmbVideoSource;
         private System.Windows.Forms.Label label7;
@@ -667,8 +620,6 @@
         private System.Windows.Forms.ComboBox CmbVideoQuality;
         private System.Windows.Forms.CheckBox CkbHiddenWindow;
         private System.Windows.Forms.Button BtnSelectSavePath;
-        private System.Windows.Forms.NumericUpDown TrbAudioOutputVolumn;
-        private System.Windows.Forms.NumericUpDown TrbAudioInputVolumn;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;

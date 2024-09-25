@@ -24,11 +24,6 @@ namespace ScreenRecorder
 
             this.StartPosition = FormStartPosition.CenterParent;
 
-            TrbAudioInputVolumn.Minimum = 1;
-            TrbAudioOutputVolumn.Minimum = 1;
-            TrbAudioInputVolumn.Maximum = 100;
-            TrbAudioOutputVolumn.Maximum = 100;
-
             //打开设置窗口后，设备顺序就固定了
             windowList = Recorder.GetWindows();
             monitorList = Recorder.GetDisplays();
@@ -124,9 +119,6 @@ namespace ScreenRecorder
             CkbEnableAudioInput.Checked = settings.EnableAudioInput;
             CkbEnableAudioOutput.Checked = settings.EnableAudioOutput;
 
-            TrbAudioInputVolumn.Value = settings.AudioInputVolume;
-            TrbAudioOutputVolumn.Value = settings.AudioOutputVolume;
-
             TxtBitrate.Text = settings.VideoBitrate.ToString();
             TxtFramerate.Text = settings.VideoFramerate.ToString();
 
@@ -149,9 +141,6 @@ namespace ScreenRecorder
 
             Settings.EnableAudioInput = CkbEnableAudioInput.Checked;
             Settings.EnableAudioOutput = CkbEnableAudioOutput.Checked;
-
-            Settings.AudioInputVolume = (int)TrbAudioInputVolumn.Value;
-            Settings.AudioOutputVolume = (int)TrbAudioOutputVolumn.Value;
 
             Settings.VideoSourceName = CmbVideoSource.SelectedItem as string;
 
@@ -365,6 +354,25 @@ namespace ScreenRecorder
         private void BtnDrawRect_Click(object sender, EventArgs e)
         {
             //截取屏幕截图并最大化，让用户绘制一个区域
+        }
+
+        private void CmbVideoSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //获取显示器的最大分辨率
+            if (CmbVideoSource.SelectedItem is string monitorName)
+            {
+                foreach (var item in monitorList)
+                {
+                    if (item.FriendlyName == monitorName)
+                    {
+                        var size = Utils.GetMonitorRes(item.DeviceName);
+                        TxtScreenRectX.Text = "0";
+                        TxtScreenRectY.Text = "0";
+                        TxtScreenRectW.Text = size.Width.ToString();
+                        TxtScreenRectH.Text = size.Height.ToString();
+                    }
+                }
+            }
         }
     }
 }

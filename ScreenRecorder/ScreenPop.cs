@@ -84,6 +84,18 @@ namespace ScreenRecorder
 
             this.WindowState = FormWindowState.Normal;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            this.Text = $"预览 分辨率：{Width}x{Height}";
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

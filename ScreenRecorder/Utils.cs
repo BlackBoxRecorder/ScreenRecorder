@@ -128,5 +128,22 @@ namespace ScreenRecorder
                 return "";
             }
         }
+
+        public static Size GetMonitorRes(string deviceName)
+        {
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                if (screen.DeviceName == deviceName)
+                {
+                    return new Size()
+                    {
+                        Height = screen.Bounds.Height,
+                        Width = screen.Bounds.Width
+                    };
+                }
+            }
+
+            return new Size();
+        }
     }
 }

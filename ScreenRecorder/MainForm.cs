@@ -135,21 +135,19 @@ namespace ScreenRecorder
             };
             options.AudioOptions = new AudioOptions
             {
-                Bitrate = AudioBitrate.bitrate_128kbps,
-                Channels = AudioChannels.Stereo,
+                //Bitrate = AudioBitrate.bitrate_192kbps,
+                //Channels = AudioChannels.Mono,
                 IsAudioEnabled = true,
             };
 
             if (!string.IsNullOrEmpty(settings.AudioInputDevice) && settings.EnableAudioInput)
             {
                 options.AudioOptions.AudioInputDevice = settings.AudioInputDevice;
-                options.AudioOptions.InputVolume = settings.AudioInputVolume;
                 options.AudioOptions.IsInputDeviceEnabled = true;
             }
             if (!string.IsNullOrEmpty(settings.AudioOutputDevice) && settings.EnableAudioOutput)
             {
                 options.AudioOptions.AudioOutputDevice = settings.AudioOutputDevice;
-                options.AudioOptions.OutputVolume = settings.AudioOutputVolume;
                 options.AudioOptions.IsOutputDeviceEnabled = true;
             }
 
