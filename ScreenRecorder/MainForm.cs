@@ -391,6 +391,7 @@ namespace ScreenRecorder
         private void LinkSettingForm_Click(object sender, EventArgs e)
         {
             this.TopMost = false;
+
             var settingForm = new SettingForm();
             settingForm.ShowDialog();
             settings = settingForm.Settings;
