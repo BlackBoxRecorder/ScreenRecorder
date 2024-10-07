@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.CmbRecordingSourceType = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.TxtBitrate = new System.Windows.Forms.TextBox();
             this.TxtFramerate = new System.Windows.Forms.TextBox();
@@ -40,15 +39,6 @@
             this.CmbVideoQuality = new System.Windows.Forms.ComboBox();
             this.CkbHiddenWindow = new System.Windows.Forms.CheckBox();
             this.BtnSelectSavePath = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.TxtScreenRectY = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.TxtScreenRectH = new System.Windows.Forms.TextBox();
-            this.TxtScreenRectW = new System.Windows.Forms.TextBox();
-            this.TxtScreenRectX = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.CmbVideoSource = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.TxtSavePath = new System.Windows.Forms.TextBox();
@@ -61,6 +51,7 @@
             this.CmbAudioInputDevice = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.CkbEnableMousePoint = new System.Windows.Forms.CheckBox();
             this.CkbEnableOverlay = new System.Windows.Forms.CheckBox();
             this.TxtOverlayHeightOffset = new System.Windows.Forms.TextBox();
             this.TxtOverlayHeight = new System.Windows.Forms.TextBox();
@@ -77,25 +68,22 @@
             this.CmbOverlaysPosition = new System.Windows.Forms.ComboBox();
             this.CmbOverlaysCamera = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.CmbRecordingSourceType);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.TxtBitrate);
             this.groupBox2.Controls.Add(this.TxtFramerate);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.CmbVideoEncoder);
+            this.groupBox2.Controls.Add(this.CkbHiddenWindow);
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.CmbVideoQuality);
-            this.groupBox2.Controls.Add(this.CkbHiddenWindow);
             this.groupBox2.Controls.Add(this.BtnSelectSavePath);
-            this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.CmbVideoSource);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.TxtSavePath);
@@ -103,20 +91,10 @@
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(399, 286);
+            this.groupBox2.Size = new System.Drawing.Size(399, 192);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "视频录制";
-            // 
-            // CmbRecordingSourceType
-            // 
-            this.CmbRecordingSourceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbRecordingSourceType.FormattingEnabled = true;
-            this.CmbRecordingSourceType.Location = new System.Drawing.Point(81, 32);
-            this.CmbRecordingSourceType.Name = "CmbRecordingSourceType";
-            this.CmbRecordingSourceType.Size = new System.Drawing.Size(73, 25);
-            this.CmbRecordingSourceType.TabIndex = 0;
-            this.CmbRecordingSourceType.SelectedIndexChanged += new System.EventHandler(this.CmbRecordingSourceType_SelectedIndexChanged);
             // 
             // label19
             // 
@@ -129,7 +107,7 @@
             // 
             // TxtBitrate
             // 
-            this.TxtBitrate.Location = new System.Drawing.Point(315, 72);
+            this.TxtBitrate.Location = new System.Drawing.Point(255, 114);
             this.TxtBitrate.Name = "TxtBitrate";
             this.TxtBitrate.Size = new System.Drawing.Size(51, 23);
             this.TxtBitrate.TabIndex = 4;
@@ -137,7 +115,7 @@
             // 
             // TxtFramerate
             // 
-            this.TxtFramerate.Location = new System.Drawing.Point(206, 72);
+            this.TxtFramerate.Location = new System.Drawing.Point(81, 111);
             this.TxtFramerate.Name = "TxtFramerate";
             this.TxtFramerate.Size = new System.Drawing.Size(51, 23);
             this.TxtFramerate.TabIndex = 3;
@@ -146,7 +124,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(22, 118);
+            this.label11.Location = new System.Drawing.Point(197, 75);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(56, 17);
             this.label11.TabIndex = 10;
@@ -155,7 +133,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(271, 76);
+            this.label21.Location = new System.Drawing.Point(197, 117);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(44, 17);
             this.label21.TabIndex = 3;
@@ -173,7 +151,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(171, 76);
+            this.label20.Location = new System.Drawing.Point(22, 114);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(32, 17);
             this.label20.TabIndex = 3;
@@ -183,7 +161,7 @@
             // 
             this.CmbVideoQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbVideoQuality.FormattingEnabled = true;
-            this.CmbVideoQuality.Location = new System.Drawing.Point(80, 115);
+            this.CmbVideoQuality.Location = new System.Drawing.Point(255, 72);
             this.CmbVideoQuality.Name = "CmbVideoQuality";
             this.CmbVideoQuality.Size = new System.Drawing.Size(74, 25);
             this.CmbVideoQuality.TabIndex = 5;
@@ -191,7 +169,7 @@
             // CkbHiddenWindow
             // 
             this.CkbHiddenWindow.AutoSize = true;
-            this.CkbHiddenWindow.Location = new System.Drawing.Point(174, 118);
+            this.CkbHiddenWindow.Location = new System.Drawing.Point(255, 36);
             this.CkbHiddenWindow.Name = "CkbHiddenWindow";
             this.CkbHiddenWindow.Size = new System.Drawing.Size(135, 21);
             this.CkbHiddenWindow.TabIndex = 6;
@@ -208,102 +186,13 @@
             this.BtnSelectSavePath.UseVisualStyleBackColor = true;
             this.BtnSelectSavePath.Click += new System.EventHandler(this.BtnSelectSavePath_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.TxtScreenRectY);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.TxtScreenRectH);
-            this.groupBox3.Controls.Add(this.TxtScreenRectW);
-            this.groupBox3.Controls.Add(this.TxtScreenRectX);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(19, 199);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(367, 69);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "录制范围";
-            // 
-            // TxtScreenRectY
-            // 
-            this.TxtScreenRectY.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectY.Location = new System.Drawing.Point(102, 29);
-            this.TxtScreenRectY.Name = "TxtScreenRectY";
-            this.TxtScreenRectY.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectY.TabIndex = 10;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(9, 32);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(16, 17);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "X";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(84, 32);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(15, 17);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Y";
-            // 
-            // TxtScreenRectH
-            // 
-            this.TxtScreenRectH.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectH.Location = new System.Drawing.Point(303, 29);
-            this.TxtScreenRectH.Name = "TxtScreenRectH";
-            this.TxtScreenRectH.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectH.TabIndex = 12;
-            // 
-            // TxtScreenRectW
-            // 
-            this.TxtScreenRectW.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectW.Location = new System.Drawing.Point(201, 29);
-            this.TxtScreenRectW.Name = "TxtScreenRectW";
-            this.TxtScreenRectW.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectW.TabIndex = 11;
-            // 
-            // TxtScreenRectX
-            // 
-            this.TxtScreenRectX.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtScreenRectX.Location = new System.Drawing.Point(29, 29);
-            this.TxtScreenRectX.Name = "TxtScreenRectX";
-            this.TxtScreenRectX.Size = new System.Drawing.Size(46, 23);
-            this.TxtScreenRectX.TabIndex = 9;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(256, 32);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 17);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Height";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(159, 32);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(42, 17);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Width";
-            // 
             // CmbVideoSource
             // 
             this.CmbVideoSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbVideoSource.FormattingEnabled = true;
-            this.CmbVideoSource.Location = new System.Drawing.Point(174, 32);
+            this.CmbVideoSource.Location = new System.Drawing.Point(80, 32);
             this.CmbVideoSource.Name = "CmbVideoSource";
-            this.CmbVideoSource.Size = new System.Drawing.Size(190, 25);
+            this.CmbVideoSource.Size = new System.Drawing.Size(169, 25);
             this.CmbVideoSource.TabIndex = 1;
             this.CmbVideoSource.SelectedIndexChanged += new System.EventHandler(this.CmbVideoSource_SelectedIndexChanged);
             // 
@@ -343,7 +232,7 @@
             this.groupBox1.Controls.Add(this.CmbAudioInputDevice);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 306);
+            this.groupBox1.Location = new System.Drawing.Point(12, 210);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(399, 123);
             this.groupBox1.TabIndex = 10;
@@ -412,6 +301,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.CkbEnableMousePoint);
             this.groupBox4.Controls.Add(this.CkbEnableOverlay);
             this.groupBox4.Controls.Add(this.TxtOverlayHeightOffset);
             this.groupBox4.Controls.Add(this.TxtOverlayHeight);
@@ -428,21 +318,31 @@
             this.groupBox4.Controls.Add(this.CmbOverlaysPosition);
             this.groupBox4.Controls.Add(this.CmbOverlaysCamera);
             this.groupBox4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox4.Location = new System.Drawing.Point(12, 435);
+            this.groupBox4.Location = new System.Drawing.Point(12, 335);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(399, 129);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "摄像头水印";
+            this.groupBox4.Text = "水印";
+            // 
+            // CkbEnableMousePoint
+            // 
+            this.CkbEnableMousePoint.AutoSize = true;
+            this.CkbEnableMousePoint.Location = new System.Drawing.Point(269, 90);
+            this.CkbEnableMousePoint.Name = "CkbEnableMousePoint";
+            this.CkbEnableMousePoint.Size = new System.Drawing.Size(99, 21);
+            this.CkbEnableMousePoint.TabIndex = 26;
+            this.CkbEnableMousePoint.Text = "启用鼠标点击";
+            this.CkbEnableMousePoint.UseVisualStyleBackColor = true;
             // 
             // CkbEnableOverlay
             // 
             this.CkbEnableOverlay.AutoSize = true;
-            this.CkbEnableOverlay.Location = new System.Drawing.Point(274, 64);
+            this.CkbEnableOverlay.Location = new System.Drawing.Point(269, 60);
             this.CkbEnableOverlay.Name = "CkbEnableOverlay";
-            this.CkbEnableOverlay.Size = new System.Drawing.Size(51, 21);
+            this.CkbEnableOverlay.Size = new System.Drawing.Size(111, 21);
             this.CkbEnableOverlay.TabIndex = 26;
-            this.CkbEnableOverlay.Text = "启用";
+            this.CkbEnableOverlay.Text = "启用摄像头水印";
             this.CkbEnableOverlay.UseVisualStyleBackColor = true;
             // 
             // TxtOverlayHeightOffset
@@ -534,7 +434,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(195, 31);
+            this.label22.Location = new System.Drawing.Point(230, 28);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 17);
             this.label22.TabIndex = 1;
@@ -543,7 +443,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(22, 31);
+            this.label12.Location = new System.Drawing.Point(22, 28);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(44, 17);
             this.label12.TabIndex = 1;
@@ -553,25 +453,25 @@
             // 
             this.CmbOverlaysPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysPosition.FormattingEnabled = true;
-            this.CmbOverlaysPosition.Location = new System.Drawing.Point(257, 27);
+            this.CmbOverlaysPosition.Location = new System.Drawing.Point(291, 24);
             this.CmbOverlaysPosition.Name = "CmbOverlaysPosition";
-            this.CmbOverlaysPosition.Size = new System.Drawing.Size(93, 25);
+            this.CmbOverlaysPosition.Size = new System.Drawing.Size(73, 25);
             this.CmbOverlaysPosition.TabIndex = 21;
             // 
             // CmbOverlaysCamera
             // 
             this.CmbOverlaysCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbOverlaysCamera.FormattingEnabled = true;
-            this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 27);
+            this.CmbOverlaysCamera.Location = new System.Drawing.Point(73, 24);
             this.CmbOverlaysCamera.Name = "CmbOverlaysCamera";
-            this.CmbOverlaysCamera.Size = new System.Drawing.Size(93, 25);
+            this.CmbOverlaysCamera.Size = new System.Drawing.Size(151, 25);
             this.CmbOverlaysCamera.TabIndex = 20;
             // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 575);
+            this.ClientSize = new System.Drawing.Size(425, 476);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -583,8 +483,6 @@
             this.Load += new System.EventHandler(this.SettingForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -596,8 +494,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox TxtScreenRectW;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TxtSavePath;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -609,13 +505,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox CmbVideoSource;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox TxtScreenRectY;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox TxtScreenRectH;
-        private System.Windows.Forms.TextBox TxtScreenRectX;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox CmbVideoQuality;
         private System.Windows.Forms.CheckBox CkbHiddenWindow;
@@ -641,7 +530,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox CmbOverlaysPosition;
-        private System.Windows.Forms.ComboBox CmbRecordingSourceType;
         private System.Windows.Forms.CheckBox CkbEnableOverlay;
+        private System.Windows.Forms.CheckBox CkbEnableMousePoint;
     }
 }

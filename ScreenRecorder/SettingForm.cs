@@ -51,33 +51,14 @@ namespace ScreenRecorder
             }
             CmbVideoEncoder.SelectedIndex = Settings.VideoEncoderIndex;
 
-            foreach (RecordingSourceType type in Enum.GetValues(typeof(RecordingSourceType)))
+            foreach (var item in monitorList)
             {
-                var fieldInfo = type.GetType().GetField(type.ToString());
-                var descriptionAttributes =
-                    fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                    as DescriptionAttribute[];
-
-                if (descriptionAttributes.Length > 0)
-                {
-                    CmbRecordingSourceType.Items.Add(
-                        new { Text = descriptionAttributes[0].Description, Value = type }
-                    );
-                }
-                else
-                {
-                    CmbRecordingSourceType.Items.Add(new { Text = type.ToString(), Value = type });
-                }
+                CmbVideoSource.Items.Add(item.FriendlyName);
             }
-
-            // 设置DisplayMember和ValueMember
-            CmbRecordingSourceType.DisplayMember = "Text";
-            CmbRecordingSourceType.ValueMember = "Value";
-            CmbRecordingSourceType.SelectedIndex = Settings.VideoSourceTypeIndex;
 
             CmbVideoSource.SelectedIndex = GetVideoSourceIndexByNameAndType(
                 Settings.VideoSourceName,
-                (RecordingSourceType)Settings.VideoSourceTypeIndex
+                RecordingSourceType.Monitor
             );
 
             foreach (var cam in cameraList)
@@ -108,11 +89,6 @@ namespace ScreenRecorder
 
         private void UpdateUI(AppSettings settings)
         {
-            TxtScreenRectX.Text = settings.ScreenRect.Left.ToString();
-            TxtScreenRectY.Text = settings.ScreenRect.Top.ToString();
-            TxtScreenRectW.Text = settings.ScreenRect.Width.ToString();
-            TxtScreenRectH.Text = settings.ScreenRect.Height.ToString();
-
             TxtSavePath.Text = settings.SavePath;
             CkbHiddenWindow.Checked = settings.HiddenMainWindow;
 
@@ -144,8 +120,6 @@ namespace ScreenRecorder
 
             Settings.VideoSourceName = CmbVideoSource.SelectedItem as string;
 
-            Settings.VideoSourceTypeIndex = CmbRecordingSourceType.SelectedIndex;
-
             Settings.SavePath = TxtSavePath.Text;
 
             Settings.VideoFramerate = int.Parse(TxtFramerate.Text);
@@ -153,19 +127,11 @@ namespace ScreenRecorder
 
             Settings.HiddenMainWindow = CkbHiddenWindow.Checked;
 
-            var rectX = int.Parse(TxtScreenRectX.Text);
-            var rectY = int.Parse(TxtScreenRectY.Text);
-            var rectW = int.Parse(TxtScreenRectW.Text);
-            var rectH = int.Parse(TxtScreenRectH.Text);
-
-            Settings.ScreenRect = new Rect()
+            Settings.OutputFrameSize = new Size()
             {
-                Left = rectX,
-                Top = rectY,
-                Width = rectW,
-                Height = rectH
+                Width = Settings.ScreenRect.Width,
+                Height = Settings.ScreenRect.Height
             };
-            Settings.OutputFrameSize = new Size() { Width = rectW, Height = rectH };
 
             if (CmbVideoQuality.SelectedIndex > 0)
             {
@@ -188,6 +154,7 @@ namespace ScreenRecorder
             Settings.VideoOverlaysSize = new Size() { Width = ovW, Height = ovH };
 
             Settings.EnableOverlay = CkbEnableOverlay.Checked;
+            Settings.EnableMousePoint = CkbEnableMousePoint.Checked;
 
             AppSettings.SaveConfig(Settings);
         }
@@ -222,42 +189,6 @@ namespace ScreenRecorder
                     Settings.AudioOutputDevice,
                     AudioDeviceSource.OutputDevices
                 );
-            }
-        }
-
-        private void CmbRecordingSourceType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CmbVideoSource.Items.Clear();
-
-            var type = (RecordingSourceType)CmbRecordingSourceType.SelectedIndex;
-
-            switch (type)
-            {
-                case RecordingSourceType.Monitor:
-                    foreach (var item in monitorList)
-                    {
-                        CmbVideoSource.Items.Add(item.FriendlyName);
-                    }
-                    break;
-                case RecordingSourceType.Window:
-                    foreach (var item in windowList)
-                    {
-                        CmbVideoSource.Items.Add(item.Title);
-                    }
-                    break;
-                case RecordingSourceType.Camera:
-                    foreach (var item in cameraList)
-                    {
-                        CmbVideoSource.Items.Add(item.FriendlyName);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (CmbVideoSource.Items.Count > 0)
-            {
-                CmbVideoSource.SelectedIndex = 0;
             }
         }
 
@@ -366,10 +297,14 @@ namespace ScreenRecorder
                     if (item.FriendlyName == monitorName)
                     {
                         var size = Utils.GetMonitorRes(item.DeviceName);
-                        TxtScreenRectX.Text = "0";
-                        TxtScreenRectY.Text = "0";
-                        TxtScreenRectW.Text = size.Width.ToString();
-                        TxtScreenRectH.Text = size.Height.ToString();
+
+                        Settings.ScreenRect = new Rect()
+                        {
+                            Left = 0,
+                            Top = 0,
+                            Width = size.Width,
+                            Height = size.Height
+                        };
                     }
                 }
             }
