@@ -12,7 +12,6 @@ namespace ScreenRecorder
             StartPosition = FormStartPosition.CenterScreen;
             MinimizeBox = false;
             MaximizeBox = false;
-            Text = "预览";
         }
 
         private Point startPoint; // 矩形的起始点
@@ -39,6 +38,10 @@ namespace ScreenRecorder
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!isSelecting)
+            {
+                return;
+            }
             using (Pen pen = new Pen(Color.Red, 4))
             {
                 e.Graphics.DrawRectangle(pen, selectionRectangle);
@@ -75,19 +78,19 @@ namespace ScreenRecorder
 
             isSelecting = false;
             var bmp = this.BackgroundImage as Bitmap;
+            bmp.Save("test1.bmp");
             var rect = Utils.CloneBitmapRegion(bmp, selectionRectangle);
+            rect.Save("test2.bmp");
             this.BackgroundImage = rect;
             bmp.Dispose();
 
-            this.Width = rect.Width;
-            this.Height = rect.Height;
-
-            this.WindowState = FormWindowState.Normal;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            this.Text = $"预览 分辨率：{Width}x{Height}";
+            Close();
         }
 
+        /// <summary>
+        /// 截图后按ESC退出
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);

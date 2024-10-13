@@ -36,11 +36,6 @@ namespace ScreenRecorder
         }
 
         /// <summary>
-        /// 录制的视频源类型，Monitor=0，Window=1，Camera=2
-        /// </summary>
-        public int VideoSourceTypeIndex { get; set; }
-
-        /// <summary>
         /// 录制的视频源
         /// </summary>
         public string VideoSourceName { get; set; }
@@ -53,16 +48,6 @@ namespace ScreenRecorder
             {
                 Left = 0,
                 Top = 0,
-                Width = Screen.PrimaryScreen.Bounds.Width,
-                Height = Screen.PrimaryScreen.Bounds.Height
-            };
-
-        /// <summary>
-        /// 输出的视频的分辨率，width，height
-        /// </summary>
-        public Size OutputFrameSize { get; set; } =
-            new Size()
-            {
                 Width = Screen.PrimaryScreen.Bounds.Width,
                 Height = Screen.PrimaryScreen.Bounds.Height
             };
@@ -101,11 +86,6 @@ namespace ScreenRecorder
         /// 视频帧率
         /// </summary>
         public int VideoFramerate { get; set; } = 15;
-
-        /// <summary>
-        /// 是否为固定帧率
-        /// </summary>
-        public bool IsFixedFramerate { get; set; }
 
         /// <summary>
         /// 输出视频的编码器，H264/H265
@@ -150,6 +130,8 @@ namespace ScreenRecorder
         /// 输出设备的名称，扬声器
         /// </summary>
         public string AudioOutputDevice { get; set; }
+
+        public bool EnableMousePoint { get; set; }
     }
 
     public static class ConfigOptions
@@ -161,18 +143,6 @@ namespace ScreenRecorder
 
         public static string[] OverlaysPositionArray { get; set; } =
             new string[] { "左上", "右上", "中间", "左下", "右下" };
-    }
-
-    public enum RecordingSourceType
-    {
-        [Description("显示器")]
-        Monitor = 0,
-
-        [Description("窗体")]
-        Window = 1,
-
-        [Description("摄像头")]
-        Camera = 2
     }
 
     public struct Rect

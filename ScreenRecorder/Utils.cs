@@ -44,50 +44,17 @@ namespace ScreenRecorder
             return clonedBitmap;
         }
 
-        public static List<RecordingSourceBase> GetVideoSourceByName(
-            RecordingSourceType type,
-            string name
-        )
+        public static List<RecordingSourceBase> GetVideoSourceByName(string name)
         {
             var src = new List<RecordingSourceBase>();
 
-            switch (type)
+            foreach (var monitor in Recorder.GetDisplays())
             {
-                case RecordingSourceType.Monitor:
-                    foreach (var monitor in Recorder.GetDisplays())
-                    {
-                        if (monitor.FriendlyName == name)
-                        {
-                            src.Add(monitor);
-                            break;
-                        }
-                    }
+                if (monitor.FriendlyName == name)
+                {
+                    src.Add(monitor);
                     break;
-                case RecordingSourceType.Window:
-                    foreach (var window in Recorder.GetWindows())
-                    {
-                        if (
-                            window.IsValidWindow()
-                            && window.IsVideoCaptureEnabled
-                            && window.Title == name
-                        )
-                        {
-                            src.Add(window);
-                            break;
-                        }
-                    }
-                    break;
-                case RecordingSourceType.Camera:
-                    foreach (var device in Recorder.GetSystemVideoCaptureDevices())
-                    {
-                        if (device.FriendlyName == name)
-                        {
-                            src.Add(device);
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                }
             }
 
             return src;
@@ -129,7 +96,7 @@ namespace ScreenRecorder
             }
         }
 
-        public static Size GetMonitorRes(string deviceName)
+        public static Size GetMonitorResolution(string deviceName)
         {
             foreach (Screen screen in Screen.AllScreens)
             {

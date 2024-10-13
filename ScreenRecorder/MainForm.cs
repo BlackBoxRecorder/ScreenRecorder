@@ -53,6 +53,11 @@ namespace ScreenRecorder
 
         private void BtnStartRecorder_Click(object sender, EventArgs e)
         {
+            StartRecording();
+        }
+
+        private void StartRecording()
+        {
             if (isRecording)
             {
                 recorder.Stop();
@@ -110,18 +115,15 @@ namespace ScreenRecorder
             options.SourceOptions = new SourceOptions
             {
                 //Populate and pass a list of recordingsources.
-                RecordingSources = Utils.GetVideoSourceByName(
-                    (RecordingSourceType)settings.VideoSourceTypeIndex,
-                    settings.VideoSourceName
-                )
+                RecordingSources = Utils.GetVideoSourceByName(settings.VideoSourceName)
             };
             options.OutputOptions = new OutputOptions
             {
                 RecorderMode = RecorderMode.Video,
                 //This sets a custom size of the video output, in pixels.
                 OutputFrameSize = new ScreenSize(
-                    settings.OutputFrameSize.Width,
-                    settings.OutputFrameSize.Height
+                    settings.ScreenRect.Width,
+                    settings.ScreenRect.Height
                 ),
                 //Stretch controls how the resizing is done, if the new aspect ratio differs.
                 Stretch = StretchMode.Uniform,
@@ -190,23 +192,24 @@ namespace ScreenRecorder
                 //Fast start writes the mp4 header at the beginning of the file, to facilitate streaming.
                 IsMp4FastStartEnabled = false
             };
-            options.MouseOptions = new MouseOptions
+            if (settings.EnableMousePoint)
             {
-                //Displays a colored dot under the mouse cursor when the left mouse button is pressed.
-                IsMouseClicksDetected = true,
-                MouseLeftClickDetectionColor = "#FFFF00",
-                MouseRightClickDetectionColor = "#FFFF00",
-                MouseClickDetectionRadius = 30,
-                MouseClickDetectionDuration = 100,
-                IsMousePointerEnabled = true,
-                /* Polling checks every millisecond if a mouse button is pressed.
-                   Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
-                MouseClickDetectionMode = MouseDetectionMode.Hook
-            };
-            var ovDevice = Utils.GetVideoSourceByName(
-                RecordingSourceType.Camera,
-                settings.VideoOverlaysDevice
-            );
+                options.MouseOptions = new MouseOptions
+                {
+                    //Displays a colored dot under the mouse cursor when the left mouse button is pressed.
+                    IsMouseClicksDetected = true,
+                    MouseLeftClickDetectionColor = "#FFFF00",
+                    MouseRightClickDetectionColor = "#FFFF00",
+                    MouseClickDetectionRadius = 30,
+                    MouseClickDetectionDuration = 100,
+                    IsMousePointerEnabled = true,
+                    /* Polling checks every millisecond if a mouse button is pressed.
+                       Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
+                    MouseClickDetectionMode = MouseDetectionMode.Hook
+                };
+            }
+
+            var ovDevice = Utils.GetVideoSourceByName(settings.VideoOverlaysDevice);
 
             if (settings.EnableOverlay && ovDevice != null && ovDevice.Count > 0)
             {
@@ -387,6 +390,7 @@ namespace ScreenRecorder
         private void LinkSettingForm_Click(object sender, EventArgs e)
         {
             this.TopMost = false;
+
             var settingForm = new SettingForm();
             settingForm.ShowDialog();
             settings = settingForm.Settings;
@@ -398,8 +402,7 @@ namespace ScreenRecorder
             TopMost = false;
             var bmp = Utils.TakeScreenshot();
 
-            var pop = new ScreenPop();
-            pop.BackgroundImage = bmp;
+            var pop = new ScreenPop { BackgroundImage = bmp };
             pop.ShowDialog();
 
             var region = pop.SelectRegion;
@@ -413,6 +416,9 @@ namespace ScreenRecorder
 
             bmp.Dispose();
             TopMost = true;
+
+            //截取区域后开始录制
+            StartRecording();
         }
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
