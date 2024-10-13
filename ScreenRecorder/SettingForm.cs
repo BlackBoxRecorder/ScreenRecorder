@@ -25,7 +25,6 @@ namespace ScreenRecorder
             this.StartPosition = FormStartPosition.CenterParent;
 
             //打开设置窗口后，设备顺序就固定了
-            windowList = Recorder.GetWindows();
             monitorList = Recorder.GetDisplays();
             cameraList = Recorder.GetSystemVideoCaptureDevices();
 
@@ -35,7 +34,6 @@ namespace ScreenRecorder
 
         public AppSettings Settings { get; private set; }
 
-        private readonly List<RecordableWindow> windowList;
         private readonly List<RecordableCamera> cameraList;
         private readonly List<RecordableDisplay> monitorList;
 
@@ -45,68 +43,97 @@ namespace ScreenRecorder
         private void SettingForm_Load(object sender, EventArgs e)
         {
             Settings = AppSettings.LoadConfig();
+
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            //视频编码
             foreach (var item in ConfigOptions.VideoEncoderArray)
             {
                 CmbVideoEncoder.Items.Add(item);
             }
             CmbVideoEncoder.SelectedIndex = Settings.VideoEncoderIndex;
 
+            //显示器名称
             foreach (var item in monitorList)
             {
                 CmbVideoSource.Items.Add(item.FriendlyName);
             }
+            CmbVideoSource.SelectedIndex = GetVideoSourceIndexByName(Settings.VideoSourceName);
 
-            CmbVideoSource.SelectedIndex = GetVideoSourceIndexByNameAndType(
-                Settings.VideoSourceName,
-                RecordingSourceType.Monitor
-            );
-
+            //摄像头名称
             foreach (var cam in cameraList)
             {
                 CmbOverlaysCamera.Items.Add(cam.FriendlyName);
             }
-            CmbOverlaysCamera.SelectedIndex = GetVideoSourceIndexByNameAndType(
-                Settings.VideoOverlaysDevice,
-                RecordingSourceType.Camera
+            CmbOverlaysCamera.SelectedIndex = GetVideoSourceIndexByName(
+                Settings.VideoOverlaysDevice
             );
 
+            //视频质量
             foreach (var item in ConfigOptions.VideoQualityArray)
             {
                 CmbVideoQuality.Items.Add(item);
             }
             CmbVideoQuality.SelectedIndex = Settings.VideoQualityIndex;
 
+            //摄像头水印位置
             foreach (var item in ConfigOptions.OverlaysPositionArray)
             {
                 CmbOverlaysPosition.Items.Add(item);
             }
             CmbOverlaysPosition.SelectedIndex = Settings.VideoOverlaysPositionIndex;
 
-            RefreshAudioComboBoxes();
+            TxtSavePath.Text = Settings.SavePath;
+            CkbHiddenWindow.Checked = Settings.HiddenMainWindow;
 
-            UpdateUI(Settings);
-        }
+            TxtBitrate.Text = Settings.VideoBitrate.ToString();
+            TxtFramerate.Text = Settings.VideoFramerate.ToString();
 
-        private void UpdateUI(AppSettings settings)
-        {
-            TxtSavePath.Text = settings.SavePath;
-            CkbHiddenWindow.Checked = settings.HiddenMainWindow;
+            TxtOverlayWidth.Text = Settings.VideoOverlaysSize.Width.ToString();
+            TxtOverlayHeight.Text = Settings.VideoOverlaysSize.Height.ToString();
 
-            CkbEnableAudioInput.Checked = settings.EnableAudioInput;
-            CkbEnableAudioOutput.Checked = settings.EnableAudioOutput;
-
-            TxtBitrate.Text = settings.VideoBitrate.ToString();
-            TxtFramerate.Text = settings.VideoFramerate.ToString();
-
-            TxtOverlayWidth.Text = settings.VideoOverlaysSize.Width.ToString();
-            TxtOverlayHeight.Text = settings.VideoOverlaysSize.Height.ToString();
-
-            TxtOverlayWidthOffset.Text = settings.VideoOverlaysOffset.Width.ToString();
-            TxtOverlayHeightOffset.Text = settings.VideoOverlaysOffset.Height.ToString();
+            TxtOverlayWidthOffset.Text = Settings.VideoOverlaysOffset.Width.ToString();
+            TxtOverlayHeightOffset.Text = Settings.VideoOverlaysOffset.Height.ToString();
 
             CmbOverlaysCamera.SelectedIndex = 0;
 
-            CkbEnableOverlay.Checked = settings.EnableOverlay;
+            CkbEnableOverlay.Checked = Settings.EnableOverlay;
+
+            #region 音频
+
+            CkbEnableAudioInput.Checked = Settings.EnableAudioInput;
+            CkbEnableAudioOutput.Checked = Settings.EnableAudioOutput;
+
+            CmbAudioOutputDevice.Items.Clear();
+            CmbAudioInputDevice.Items.Clear();
+
+            foreach (var outputDevice in audioOutputList)
+            {
+                CmbAudioOutputDevice.Items.Add(outputDevice.FriendlyName);
+            }
+            foreach (var inputDevice in audioInputList)
+            {
+                CmbAudioInputDevice.Items.Add(inputDevice.FriendlyName);
+            }
+
+            if (CmbAudioInputDevice.Items.Count > 0)
+            {
+                CmbAudioInputDevice.SelectedIndex = GetAudioSourceIndexByName(
+                    Settings.AudioInputDevice,
+                    AudioDeviceSource.InputDevices
+                );
+            }
+            if (CmbAudioOutputDevice.Items.Count > 0)
+            {
+                CmbAudioOutputDevice.SelectedIndex = GetAudioSourceIndexByName(
+                    Settings.AudioOutputDevice,
+                    AudioDeviceSource.OutputDevices
+                );
+            }
+            #endregion
         }
 
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -126,12 +153,6 @@ namespace ScreenRecorder
             Settings.VideoBitrate = int.Parse(TxtBitrate.Text);
 
             Settings.HiddenMainWindow = CkbHiddenWindow.Checked;
-
-            Settings.OutputFrameSize = new Size()
-            {
-                Width = Settings.ScreenRect.Width,
-                Height = Settings.ScreenRect.Height
-            };
 
             if (CmbVideoQuality.SelectedIndex > 0)
             {
@@ -159,74 +180,14 @@ namespace ScreenRecorder
             AppSettings.SaveConfig(Settings);
         }
 
-        /// <summary>
-        /// 刷新音频输入输出设备
-        /// </summary>
-        private void RefreshAudioComboBoxes()
+        private int GetVideoSourceIndexByName(string name)
         {
-            CmbAudioOutputDevice.Items.Clear();
-            CmbAudioInputDevice.Items.Clear();
-
-            foreach (var outputDevice in audioOutputList)
+            for (int i = 0; i < monitorList.Count; i++)
             {
-                CmbAudioOutputDevice.Items.Add(outputDevice.FriendlyName);
-            }
-            foreach (var inputDevice in audioInputList)
-            {
-                CmbAudioInputDevice.Items.Add(inputDevice.FriendlyName);
-            }
-
-            if (CmbAudioInputDevice.Items.Count > 0)
-            {
-                CmbAudioInputDevice.SelectedIndex = GetAudioSourceIndexByName(
-                    Settings.AudioInputDevice,
-                    AudioDeviceSource.InputDevices
-                );
-            }
-            if (CmbAudioOutputDevice.Items.Count > 0)
-            {
-                CmbAudioOutputDevice.SelectedIndex = GetAudioSourceIndexByName(
-                    Settings.AudioOutputDevice,
-                    AudioDeviceSource.OutputDevices
-                );
-            }
-        }
-
-        //通过配置文件中的设备名称，获取到 Index
-
-        private int GetVideoSourceIndexByNameAndType(string name, RecordingSourceType type)
-        {
-            switch (type)
-            {
-                case RecordingSourceType.Monitor:
-                    for (int i = 0; i < monitorList.Count; i++)
-                    {
-                        if (name == monitorList[i].FriendlyName)
-                        {
-                            return i;
-                        }
-                    }
-                    break;
-                case RecordingSourceType.Window:
-                    for (int i = 0; i < windowList.Count; i++)
-                    {
-                        if (name == windowList[i].Title)
-                        {
-                            return i;
-                        }
-                    }
-                    break;
-                case RecordingSourceType.Camera:
-                    for (int i = 0; i < cameraList.Count; i++)
-                    {
-                        if (name == cameraList[i].FriendlyName)
-                        {
-                            return i;
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                if (name == monitorList[i].FriendlyName)
+                {
+                    return i;
+                }
             }
 
             return -1;
@@ -263,28 +224,29 @@ namespace ScreenRecorder
             return -1;
         }
 
+        /// <summary>
+        /// 选择视频保存目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSelectSavePath_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-
-            folderBrowserDialog.Description = "请选择一个文件夹";
-            folderBrowserDialog.ShowNewFolderButton = true; // 是否显示新建文件夹按钮
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "请选择一个文件夹",
+                ShowNewFolderButton = true // 是否显示新建文件夹按钮
+            };
             DialogResult result = folderBrowserDialog.ShowDialog();
 
+            var path = folderBrowserDialog.SelectedPath;
             if (
                 result == DialogResult.OK
-                && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath)
+                && !string.IsNullOrWhiteSpace(path)
+                && Directory.Exists(path)
             )
             {
-                // 用户选择了文件夹，获取路径
-                string folderPath = folderBrowserDialog.SelectedPath;
-                TxtSavePath.Text = folderPath;
+                TxtSavePath.Text = path;
             }
-        }
-
-        private void BtnDrawRect_Click(object sender, EventArgs e)
-        {
-            //截取屏幕截图并最大化，让用户绘制一个区域
         }
 
         private void CmbVideoSource_SelectedIndexChanged(object sender, EventArgs e)
@@ -296,7 +258,7 @@ namespace ScreenRecorder
                 {
                     if (item.FriendlyName == monitorName)
                     {
-                        var size = Utils.GetMonitorRes(item.DeviceName);
+                        var size = Utils.GetMonitorResolution(item.DeviceName);
 
                         Settings.ScreenRect = new Rect()
                         {
