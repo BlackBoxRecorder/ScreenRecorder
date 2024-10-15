@@ -12,9 +12,21 @@ namespace ScreenRecorder
 {
     internal static class Utils
     {
-        public static Bitmap TakeScreenshot()
+        /// <summary>
+        /// 截取指定显示器的截图
+        /// </summary>
+        /// <returns></returns>
+        public static Bitmap TakeScreenshot(string monitorName)
         {
-            Rectangle bounds = Screen.PrimaryScreen.Bounds;
+            var deviceName = GetDeviceNameByMonitorFirendlyName(monitorName);
+
+            var screen = Array.Find(Screen.AllScreens, s => s.DeviceName == deviceName);
+            if (screen == null)
+            {
+                return null;
+            }
+
+            Rectangle bounds = screen.Bounds;
             Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height);
             using (Graphics g = Graphics.FromImage(screenshot))
             {
@@ -23,6 +35,13 @@ namespace ScreenRecorder
             return screenshot;
         }
 
+        /// <summary>
+        /// 克隆一个图片的指定区域并返回新图片
+        /// </summary>
+        /// <param name="sourceBitmap"></param>
+        /// <param name="sourceRegion"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static Bitmap CloneBitmapRegion(Bitmap sourceBitmap, Rectangle sourceRegion)
         {
             // 确保指定的区域在Bitmap的边界内
@@ -44,6 +63,11 @@ namespace ScreenRecorder
             return clonedBitmap;
         }
 
+        /// <summary>
+        /// 根据显示器的友好名称，获取录制视频源
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static List<RecordingSourceBase> GetVideoSourceByName(string name)
         {
             var src = new List<RecordingSourceBase>();
@@ -58,6 +82,19 @@ namespace ScreenRecorder
             }
 
             return src;
+        }
+
+        public static string GetDeviceNameByMonitorFirendlyName(string name)
+        {
+            foreach (var monitor in Recorder.GetDisplays())
+            {
+                if (monitor.FriendlyName == name)
+                {
+                    return monitor.DeviceName;
+                }
+            }
+
+            return "";
         }
 
         public static string GetAppVersion()
@@ -96,6 +133,11 @@ namespace ScreenRecorder
             }
         }
 
+        /// <summary>
+        /// 获取指定显示器的分辨率
+        /// </summary>
+        /// <param name="deviceName"></param>
+        /// <returns></returns>
         public static Size GetMonitorResolution(string deviceName)
         {
             foreach (Screen screen in Screen.AllScreens)

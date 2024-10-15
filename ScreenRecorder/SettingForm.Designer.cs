@@ -35,9 +35,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.CmbVideoEncoder = new System.Windows.Forms.ComboBox();
+            this.CkbHiddenWindow = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
             this.CmbVideoQuality = new System.Windows.Forms.ComboBox();
-            this.CkbHiddenWindow = new System.Windows.Forms.CheckBox();
             this.BtnSelectSavePath = new System.Windows.Forms.Button();
             this.CmbVideoSource = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -109,15 +109,15 @@
             // 
             this.TxtBitrate.Location = new System.Drawing.Point(255, 114);
             this.TxtBitrate.Name = "TxtBitrate";
-            this.TxtBitrate.Size = new System.Drawing.Size(51, 23);
+            this.TxtBitrate.Size = new System.Drawing.Size(74, 23);
             this.TxtBitrate.TabIndex = 4;
             this.TxtBitrate.Text = "4096";
             // 
             // TxtFramerate
             // 
-            this.TxtFramerate.Location = new System.Drawing.Point(81, 111);
+            this.TxtFramerate.Location = new System.Drawing.Point(80, 111);
             this.TxtFramerate.Name = "TxtFramerate";
-            this.TxtFramerate.Size = new System.Drawing.Size(51, 23);
+            this.TxtFramerate.Size = new System.Drawing.Size(73, 23);
             this.TxtFramerate.TabIndex = 3;
             this.TxtFramerate.Text = "30";
             // 
@@ -148,6 +148,16 @@
             this.CmbVideoEncoder.Size = new System.Drawing.Size(74, 25);
             this.CmbVideoEncoder.TabIndex = 2;
             // 
+            // CkbHiddenWindow
+            // 
+            this.CkbHiddenWindow.AutoSize = true;
+            this.CkbHiddenWindow.Location = new System.Drawing.Point(255, 36);
+            this.CkbHiddenWindow.Name = "CkbHiddenWindow";
+            this.CkbHiddenWindow.Size = new System.Drawing.Size(135, 21);
+            this.CkbHiddenWindow.TabIndex = 6;
+            this.CkbHiddenWindow.Text = "录制时隐藏程序窗体";
+            this.CkbHiddenWindow.UseVisualStyleBackColor = true;
+            // 
             // label20
             // 
             this.label20.AutoSize = true;
@@ -165,16 +175,6 @@
             this.CmbVideoQuality.Name = "CmbVideoQuality";
             this.CmbVideoQuality.Size = new System.Drawing.Size(74, 25);
             this.CmbVideoQuality.TabIndex = 5;
-            // 
-            // CkbHiddenWindow
-            // 
-            this.CkbHiddenWindow.AutoSize = true;
-            this.CkbHiddenWindow.Location = new System.Drawing.Point(255, 36);
-            this.CkbHiddenWindow.Name = "CkbHiddenWindow";
-            this.CkbHiddenWindow.Size = new System.Drawing.Size(135, 21);
-            this.CkbHiddenWindow.TabIndex = 6;
-            this.CkbHiddenWindow.Text = "录制时隐藏程序窗体";
-            this.CkbHiddenWindow.UseVisualStyleBackColor = true;
             // 
             // BtnSelectSavePath
             // 

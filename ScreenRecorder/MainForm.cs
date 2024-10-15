@@ -67,7 +67,7 @@ namespace ScreenRecorder
             CreateRecording();
 
             isRecording = true;
-            sw.Restart();
+            sw.Restart(); //每次开始时，重置录制时长
             UpdateRecordDuration();
         }
 
@@ -82,7 +82,8 @@ namespace ScreenRecorder
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             if (!Directory.Exists(settings.SavePath))
             {
-                throw new DirectoryNotFoundException(settings.SavePath);
+                MessageBox.Show($"目录不存在：{settings.SavePath}");
+                return;
             }
             string videoPath = Path.Combine(settings.SavePath, timestamp + ".mp4");
 
@@ -253,7 +254,7 @@ namespace ScreenRecorder
                 IsLogEnabled = true,
                 //If this path is configured, logs are redirected to this file.
                 LogFilePath = "recorder.log",
-                LogSeverityLevel = ScreenRecorderLib.LogLevel.Debug
+                LogSeverityLevel = ScreenRecorderLib.LogLevel.Info
             };
 
             return options;
@@ -269,7 +270,7 @@ namespace ScreenRecorder
                         case RecorderStatus.Recording:
                             if (!sw.IsRunning)
                             {
-                                sw.Start();
+                                sw.Start(); //暂停录制后，继续录制时再开始计时
                             }
                             BtnStartRecorder.Text = "停止录制";
                             BtnPauseRecorder.Visible = true;
@@ -334,6 +335,8 @@ namespace ScreenRecorder
             LblRecordDuration.Text = "00:00:00";
             recorder?.Dispose();
             recorder = null;
+
+            settings = AppSettings.LoadConfig(); //恢复默认配置
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -400,10 +403,27 @@ namespace ScreenRecorder
         private void BtnDrawRect_Click(object sender, EventArgs e)
         {
             TopMost = false;
-            var bmp = Utils.TakeScreenshot();
+            var bmp = Utils.TakeScreenshot(settings.VideoSourceName);
+
+            if (bmp == null)
+            {
+                MessageBox.Show("选择区域时截图失败");
+                return;
+            }
 
             var pop = new ScreenPop { BackgroundImage = bmp };
             pop.ShowDialog();
+
+            if (pop.DialogResult == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            if (pop.DialogResult == DialogResult.Abort)
+            {
+                MessageBox.Show("选择的区域太小，最小128x128");
+                return;
+            }
 
             var region = pop.SelectRegion;
             settings.ScreenRect = new Rect

@@ -10,6 +10,11 @@ namespace ScreenRecorder
         {
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
+            BackgroundImageLayout = ImageLayout.Center;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint, true);
+
             MinimizeBox = false;
             MaximizeBox = false;
         }
@@ -25,23 +30,16 @@ namespace ScreenRecorder
 
         private void ScreenPop_Load(object sender, EventArgs e)
         {
-            this.BackgroundImageLayout = ImageLayout.Center;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-
-            this.Cursor = Cursors.Cross;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            Cursor = Cursors.Cross;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             if (!isSelecting)
-            {
                 return;
-            }
+
             using (Pen pen = new Pen(Color.Red, 4))
             {
                 e.Graphics.DrawRectangle(pen, selectionRectangle);
@@ -68,7 +66,8 @@ namespace ScreenRecorder
             int y = Math.Min(e.Y, startPoint.Y);
 
             selectionRectangle = new Rectangle(x, y, width, height);
-            this.Invalidate();
+
+            Invalidate();
         }
 
         private void ScreenPop_MouseUp(object sender, MouseEventArgs e)
@@ -77,12 +76,15 @@ namespace ScreenRecorder
                 return;
 
             isSelecting = false;
-            var bmp = this.BackgroundImage as Bitmap;
-            bmp.Save("test1.bmp");
-            var rect = Utils.CloneBitmapRegion(bmp, selectionRectangle);
-            rect.Save("test2.bmp");
-            this.BackgroundImage = rect;
-            bmp.Dispose();
+
+            if (selectionRectangle.Width < 128 || selectionRectangle.Height < 128)
+            {
+                DialogResult = DialogResult.Abort;
+            }
+            else
+            {
+                DialogResult = DialogResult.OK;
+            }
 
             Close();
         }
@@ -97,7 +99,8 @@ namespace ScreenRecorder
 
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                Close();
+                DialogResult = DialogResult.Cancel;
             }
         }
     }
