@@ -236,7 +236,7 @@ namespace ScreenRecorder
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var url = $"https://github.com/BlackBoxRecorder/ScreenRecorder";
             try
