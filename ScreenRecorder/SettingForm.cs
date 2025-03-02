@@ -193,7 +193,6 @@ namespace ScreenRecorder
             var result = fbd.ShowDialog();
             var path = fbd.SelectedPath;
 
-            var path = folderBrowserDialog.SelectedPath;
             if (
                 result == DialogResult.OK
                 && !string.IsNullOrWhiteSpace(path)

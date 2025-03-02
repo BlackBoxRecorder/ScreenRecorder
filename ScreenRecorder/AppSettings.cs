@@ -87,8 +87,6 @@ namespace ScreenRecorder
         /// 输出设备的名称，扬声器
         /// </summary>
         public string AudioOutputDevice { get; set; }
-
-        public bool EnableMousePoint { get; set; }
     }
 
     public struct Rect
