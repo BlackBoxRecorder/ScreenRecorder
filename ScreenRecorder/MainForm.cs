@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Threading;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
+using AntdUI;
 using ScreenRecorder.Properties;
 using ScreenRecorderLib;
 
 namespace ScreenRecorder
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm
     {
         private bool isRecording = false;
         private readonly Stopwatch sw = new Stopwatch();
@@ -25,30 +26,7 @@ namespace ScreenRecorder
         public MainForm()
         {
             InitializeComponent();
-
-            Width = 280;
-            Height = 260;
-
-            LblRecordDuration.Location = new Point(
-                (this.Width - LblRecordDuration.Width - 12) / 2,
-                10
-            );
-
-            BtnStartRecorder.Location = new Point(
-                (this.Width - BtnStartRecorder.Width - 16) / 2,
-                60
-            );
-            BtnPauseRecorder.Location = new Point(
-                (this.Width - BtnPauseRecorder.Width - 16) / 2,
-                105
-            );
-
-            tableLayoutPanel1.Location = new Point(
-                (this.Width - tableLayoutPanel1.Width - 4) / 2,
-                160
-            );
-
-            this.TopMost = true;
+            BtnPauseRecorder.Visible = false;
         }
 
         private void BtnStartRecorder_Click(object sender, EventArgs e)
@@ -60,48 +38,48 @@ namespace ScreenRecorder
         {
             if (isRecording)
             {
-                recorder.Stop();
+                recorder?.Stop();
                 return;
             }
 
-            CreateRecording();
+            try
+            {
+                CreateRecording();
 
-            isRecording = true;
-            sw.Restart(); //每次开始时，重置录制时长
-            UpdateRecordDuration();
+                isRecording = true;
+                sw.Restart(); //每次开始时，重置录制时长
+                UpdateRecordDuration();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void CreateRecording()
         {
-            if (settings.HiddenMainWindow)
-            {
-                IntPtr hwnd = this.Handle;
-                Recorder.SetExcludeFromCapture(hwnd, true);
-            }
+            IntPtr hwnd = this.Handle;
+            Recorder.SetExcludeFromCapture(hwnd, true);
 
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+
             if (!Directory.Exists(settings.SavePath))
             {
-                MessageBox.Show($"目录不存在：{settings.SavePath}");
-                return;
+                Directory.CreateDirectory(settings.SavePath);
             }
-            string videoPath = Path.Combine(settings.SavePath, timestamp + ".mp4");
 
-            RecorderOptions options = BuildOptions();
+            Directory.GetFiles(settings.SavePath); // 尝试读取文件列表，如果失败则没有权限
 
+            var videoPath = Path.Combine(settings.SavePath, timestamp + ".mp4");
+
+            var options = BuildOptions();
             recorder = Recorder.CreateRecorder(options);
+
             recorder.OnRecordingComplete += Recorder_OnRecordingComplete;
             recorder.OnRecordingFailed += Recorder_OnRecordingFailed;
             recorder.OnStatusChanged += Recorder_OnStatusChanged;
-            recorder.OnSnapshotSaved += Recorder_OnSnapshotSaved;
 
             recorder.Record(videoPath);
-        }
-
-        private void Recorder_OnSnapshotSaved(object sender, SnapshotSavedEventArgs e)
-        {
-            string filepath = e.SnapshotPath;
-            Console.WriteLine(filepath);
         }
 
         /// <summary>
@@ -111,12 +89,12 @@ namespace ScreenRecorder
         private RecorderOptions BuildOptions()
         {
             //These options must be set before starting the recording, and cannot be modified while recording.
-            RecorderOptions options = new RecorderOptions();
+            var options = new RecorderOptions();
 
             options.SourceOptions = new SourceOptions
             {
                 //Populate and pass a list of recordingsources.
-                RecordingSources = Utils.GetVideoSourceByName(settings.VideoSourceName)
+                RecordingSources = Utils.GetVideoSourceByName(settings.VideoSourceName),
             };
             options.OutputOptions = new OutputOptions
             {
@@ -138,9 +116,9 @@ namespace ScreenRecorder
             };
             options.AudioOptions = new AudioOptions
             {
-                //Bitrate = AudioBitrate.bitrate_192kbps,
-                //Channels = AudioChannels.Mono,
-                IsAudioEnabled = true,
+                ///Bitrate = AudioBitrate.bitrate_192kbps,
+                ///Channels = AudioChannels.Mono,
+                IsAudioEnabled = settings.EnableAudioInput || settings.EnableAudioOutput,
             };
 
             if (!string.IsNullOrEmpty(settings.AudioInputDevice) && settings.EnableAudioInput)
@@ -154,29 +132,17 @@ namespace ScreenRecorder
                 options.AudioOptions.IsOutputDeviceEnabled = true;
             }
 
-            IVideoEncoder encoder;
-            if (ConfigOptions.VideoEncoderArray[settings.VideoEncoderIndex] == "H264")
+            var encoder = new H265VideoEncoder
             {
-                encoder = new H264VideoEncoder
-                {
-                    BitrateMode = H264BitrateControlMode.Quality,
-                    EncoderProfile = H264Profile.Main,
-                };
-            }
-            else
-            {
-                encoder = new H265VideoEncoder
-                {
-                    BitrateMode = H265BitrateControlMode.Quality,
-                    EncoderProfile = H265Profile.Main,
-                };
-            }
+                BitrateMode = H265BitrateControlMode.Quality,
+                EncoderProfile = H265Profile.Main,
+            };
 
             options.VideoEncoderOptions = new VideoEncoderOptions
             {
                 Bitrate = settings.VideoBitrate * 1000,
                 Framerate = settings.VideoFramerate,
-                Quality = int.Parse(ConfigOptions.VideoQualityArray[settings.VideoQualityIndex]),
+                Quality = 90,
                 IsFixedFramerate = true,
                 //Currently supported are H264VideoEncoder and H265VideoEncoder
                 Encoder = encoder,
@@ -191,52 +157,8 @@ namespace ScreenRecorder
                 //Low latency mode provides faster encoding, but can reduce quality.
                 IsLowLatencyEnabled = false,
                 //Fast start writes the mp4 header at the beginning of the file, to facilitate streaming.
-                IsMp4FastStartEnabled = false
+                IsMp4FastStartEnabled = false,
             };
-            if (settings.EnableMousePoint)
-            {
-                options.MouseOptions = new MouseOptions
-                {
-                    //Displays a colored dot under the mouse cursor when the left mouse button is pressed.
-                    IsMouseClicksDetected = true,
-                    MouseLeftClickDetectionColor = "#FFFF00",
-                    MouseRightClickDetectionColor = "#FFFF00",
-                    MouseClickDetectionRadius = 30,
-                    MouseClickDetectionDuration = 100,
-                    IsMousePointerEnabled = true,
-                    /* Polling checks every millisecond if a mouse button is pressed.
-                       Hook is more accurate, but may affect mouse performance as every mouse update must be processed.*/
-                    MouseClickDetectionMode = MouseDetectionMode.Hook
-                };
-            }
-
-            var ovDevice = Utils.GetVideoSourceByName(settings.VideoOverlaysDevice);
-
-            if (settings.EnableOverlay && ovDevice != null && ovDevice.Count > 0)
-            {
-                var dev = ovDevice[0] as RecordableCamera;
-                options.OverlayOptions = new OverLayOptions
-                {
-                    //Populate and pass a list of recording overlays.
-                    Overlays = new List<RecordingOverlayBase>
-                    {
-                        new VideoCaptureOverlay
-                        {
-                            AnchorPoint = (ScreenRecorderLib.Anchor)
-                                settings.VideoOverlaysPositionIndex,
-                            Offset = new ScreenSize(
-                                settings.VideoOverlaysOffset.Width,
-                                settings.VideoOverlaysOffset.Height
-                            ),
-                            Size = new ScreenSize(
-                                settings.VideoOverlaysSize.Width,
-                                settings.VideoOverlaysSize.Height
-                            ),
-                            DeviceName = dev.DeviceName,
-                        }
-                    },
-                };
-            }
 
             options.SnapshotOptions = new SnapshotOptions
             {
@@ -246,7 +168,7 @@ namespace ScreenRecorder
                 //SnapshotFormat = ImageFormat.PNG,
                 //Optional path to the directory to store snapshots in
                 //If not configured, snapshots are stored in the same folder as video output.
-                SnapshotsDirectory = ""
+                SnapshotsDirectory = "",
             };
             options.LogOptions = new LogOptions
             {
@@ -254,7 +176,7 @@ namespace ScreenRecorder
                 IsLogEnabled = true,
                 //If this path is configured, logs are redirected to this file.
                 LogFilePath = "recorder.log",
-                LogSeverityLevel = ScreenRecorderLib.LogLevel.Info
+                LogSeverityLevel = ScreenRecorderLib.LogLevel.Warn,
             };
 
             return options;
@@ -272,20 +194,36 @@ namespace ScreenRecorder
                             {
                                 sw.Start(); //暂停录制后，继续录制时再开始计时
                             }
-                            BtnStartRecorder.Text = "停止录制";
+
                             BtnPauseRecorder.Visible = true;
+
+                            BtnStartRecorder.Text = "停止录制";
                             BtnPauseRecorder.Text = "暂停录制";
+
+                            BtnDrawRect.Enabled = false;
+                            BtnSettings.Enabled = false;
+
                             break;
                         case RecorderStatus.Paused:
                             if (sw.IsRunning)
                             {
                                 sw.Stop();
                             }
+
+                            BtnPauseRecorder.Visible = true;
                             BtnPauseRecorder.Text = "继续录制";
+
+                            BtnDrawRect.Enabled = false;
+                            BtnSettings.Enabled = false;
+
                             break;
                         case RecorderStatus.Finishing:
-                            BtnPauseRecorder.Visible = false;
                             BtnStartRecorder.Text = "开始录制";
+                            BtnPauseRecorder.Text = "暂停录制";
+                            BtnPauseRecorder.Visible = false;
+
+                            BtnDrawRect.Enabled = true;
+                            BtnSettings.Enabled = true;
 
                             isRecording = false;
                             break;
@@ -301,7 +239,7 @@ namespace ScreenRecorder
             BeginInvoke(
                 new Action(() =>
                 {
-                    BtnPauseRecorder.Visible = false;
+                    BtnPauseRecorder.Enabled = false;
                     BtnStartRecorder.Text = "开始录制";
                     isRecording = false;
                     CleanupResources();
@@ -315,11 +253,14 @@ namespace ScreenRecorder
             BeginInvoke(
                 new Action(() =>
                 {
-                    string filePath = e.FilePath;
-                    Console.WriteLine(filePath);
+                    var filePath = e.FilePath;
                     CleanupResources();
 
-                    var btnRes = MessageBox.Show("是否打开视频目录？", "录制完成", MessageBoxButtons.YesNo);
+                    var btnRes = MessageBox.Show(
+                        "是否打开视频目录？",
+                        "录制完成",
+                        MessageBoxButtons.YesNo
+                    );
                     if (btnRes == DialogResult.Yes)
                     {
                         Process.Start(Path.GetDirectoryName(filePath));
@@ -336,12 +277,19 @@ namespace ScreenRecorder
             recorder?.Dispose();
             recorder = null;
 
-            settings = AppSettings.LoadConfig(); //恢复默认配置
+            settings = AppSettings.LoadConfig();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            settings = AppSettings.LoadConfig();
+            try
+            {
+                settings = AppSettings.LoadConfig();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void UpdateRecordDuration()
@@ -356,7 +304,7 @@ namespace ScreenRecorder
                             LblRecordDuration.Text = sw.Elapsed.ToString(@"hh\:mm\:ss");
                         })
                     );
-                    await Task.Delay(500);
+                    await Task.Delay(300);
                 }
             });
         }
@@ -390,19 +338,21 @@ namespace ScreenRecorder
             }
         }
 
-        private void LinkSettingForm_Click(object sender, EventArgs e)
+        private void BtnSettings_Click(object sender, EventArgs e)
         {
-            this.TopMost = false;
-
             var settingForm = new SettingForm();
             settingForm.ShowDialog();
-            settings = settingForm.Settings;
-            this.TopMost = true;
+
+            settings = AppSettings.LoadConfig();
         }
 
         private void BtnDrawRect_Click(object sender, EventArgs e)
         {
-            TopMost = false;
+            if (isRecording)
+            {
+                return;
+            }
+
             var bmp = Utils.TakeScreenshot(settings.VideoSourceName);
 
             if (bmp == null)
@@ -431,11 +381,10 @@ namespace ScreenRecorder
                 Top = region.Y,
                 Left = region.X,
                 Width = region.Width,
-                Height = region.Height
+                Height = region.Height,
             };
 
             bmp.Dispose();
-            TopMost = true;
 
             //截取区域后开始录制
             StartRecording();
@@ -443,16 +392,12 @@ namespace ScreenRecorder
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
+            if (!isRecording)
+            {
+                MessageBox.Show("开始录制后才能截图");
+                return;
+            }
             recorder?.TakeSnapshot();
-        }
-
-        private void BtnAbout_Click(object sender, EventArgs e)
-        {
-            this.TopMost = false;
-            var aboutForm = new AboutForm();
-            aboutForm.Version = Utils.GetAppVersion();
-            aboutForm.ShowDialog();
-            this.TopMost = true;
         }
     }
 }
