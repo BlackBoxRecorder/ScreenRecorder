@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScreenRecorderLib;
 
@@ -12,38 +8,42 @@ namespace ScreenRecorder
 {
     internal static class Utils
     {
-        public static Bitmap TakeScreenshot()
+        /// <summary>
+        /// 截取指定显示器的截图
+        /// </summary>
+        /// <returns></returns>
+        public static Bitmap TakeScreenshot(string monitorName)
         {
-            Rectangle bounds = Screen.PrimaryScreen.Bounds;
-            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height);
-            using (Graphics g = Graphics.FromImage(screenshot))
+            try
             {
-                g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
+                var deviceName = GetDeviceNameByMonitorFirendlyName(monitorName);
+
+                var screen = Array.Find(Screen.AllScreens, s => s.DeviceName == deviceName);
+                if (screen == null)
+                {
+                    return null;
+                }
+
+                Rectangle bounds = screen.Bounds;
+                Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height);
+                using (Graphics g = Graphics.FromImage(screenshot))
+                {
+                    g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
+                }
+                return screenshot;
             }
-            return screenshot;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
         }
 
-        public static Bitmap CloneBitmapRegion(Bitmap sourceBitmap, Rectangle sourceRegion)
-        {
-            // 确保指定的区域在Bitmap的边界内
-            if (
-                sourceRegion.Width <= 0
-                || sourceRegion.Height <= 0
-                || sourceRegion.X < 0
-                || sourceRegion.Y < 0
-                || sourceRegion.X + sourceRegion.Width > sourceBitmap.Width
-                || sourceRegion.Y + sourceRegion.Height > sourceBitmap.Height
-            )
-            {
-                throw new ArgumentException("指定的矩形区域无效或超出Bitmap边界。");
-            }
-
-            // 复制指定区域的Bitmap
-            Bitmap clonedBitmap = sourceBitmap.Clone(sourceRegion, sourceBitmap.PixelFormat);
-
-            return clonedBitmap;
-        }
-
+        /// <summary>
+        /// 根据显示器的友好名称，获取录制视频源
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static List<RecordingSourceBase> GetVideoSourceByName(string name)
         {
             var src = new List<RecordingSourceBase>();
@@ -60,42 +60,24 @@ namespace ScreenRecorder
             return src;
         }
 
-        public static string GetAppVersion()
+        public static string GetDeviceNameByMonitorFirendlyName(string name)
         {
-            string date = "";
-            string hash = "";
-            string branch = "";
-
-            try
+            foreach (var monitor in Recorder.GetDisplays())
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                var gitVersionInformationType = assembly.GetType("GitVersionInformation");
-                var fields = gitVersionInformationType.GetFields();
-
-                foreach (var field in fields)
+                if (monitor.FriendlyName == name)
                 {
-                    if (field.Name == "CommitDate")
-                    {
-                        date = field.GetValue(null).ToString();
-                    }
-                    if (field.Name == "ShortSha")
-                    {
-                        hash = field.GetValue(null).ToString();
-                    }
-                    if (field.Name == "SemVer")
-                    {
-                        branch = field.GetValue(null).ToString();
-                    }
+                    return monitor.DeviceName;
                 }
-                return $"{branch}-{hash} @{date}";
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return "";
-            }
+
+            return "";
         }
 
+        /// <summary>
+        /// 获取指定显示器的分辨率
+        /// </summary>
+        /// <param name="deviceName"></param>
+        /// <returns></returns>
         public static Size GetMonitorResolution(string deviceName)
         {
             foreach (Screen screen in Screen.AllScreens)
@@ -105,7 +87,7 @@ namespace ScreenRecorder
                     return new Size()
                     {
                         Height = screen.Bounds.Height,
-                        Width = screen.Bounds.Width
+                        Width = screen.Bounds.Width,
                     };
                 }
             }

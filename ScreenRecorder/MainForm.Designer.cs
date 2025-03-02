@@ -29,160 +29,136 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.BtnStartRecorder = new System.Windows.Forms.Button();
-            this.BtnPauseRecorder = new System.Windows.Forms.Button();
-            this.LblRecordDuration = new System.Windows.Forms.Label();
-            this.BtnDrawRect = new System.Windows.Forms.Button();
-            this.BtnSnapshot = new System.Windows.Forms.Button();
-            this.BtnSettings = new System.Windows.Forms.Button();
-            this.BtnAbout = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.gridPanel2 = new AntdUI.GridPanel();
+            this.BtnSettings = new AntdUI.Button();
+            this.BtnSnapshot = new AntdUI.Button();
+            this.BtnDrawRect = new AntdUI.Button();
+            this.BtnPauseRecorder = new AntdUI.Button();
+            this.BtnStartRecorder = new AntdUI.Button();
+            this.LblRecordDuration = new AntdUI.Label();
+            this.gridPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // BtnStartRecorder
+            // gridPanel2
             // 
-            this.BtnStartRecorder.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.BtnStartRecorder.Location = new System.Drawing.Point(65, 80);
-            this.BtnStartRecorder.Margin = new System.Windows.Forms.Padding(0);
-            this.BtnStartRecorder.Name = "BtnStartRecorder";
-            this.BtnStartRecorder.Size = new System.Drawing.Size(180, 40);
-            this.BtnStartRecorder.TabIndex = 0;
-            this.BtnStartRecorder.Text = "开始录制";
-            this.BtnStartRecorder.UseVisualStyleBackColor = true;
-            this.BtnStartRecorder.Click += new System.EventHandler(this.BtnStartRecorder_Click);
-            // 
-            // BtnPauseRecorder
-            // 
-            this.BtnPauseRecorder.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.BtnPauseRecorder.Location = new System.Drawing.Point(65, 129);
-            this.BtnPauseRecorder.Margin = new System.Windows.Forms.Padding(0);
-            this.BtnPauseRecorder.Name = "BtnPauseRecorder";
-            this.BtnPauseRecorder.Size = new System.Drawing.Size(180, 40);
-            this.BtnPauseRecorder.TabIndex = 1;
-            this.BtnPauseRecorder.Text = "暂停录制";
-            this.BtnPauseRecorder.UseVisualStyleBackColor = true;
-            this.BtnPauseRecorder.Visible = false;
-            this.BtnPauseRecorder.Click += new System.EventHandler(this.BtnPauseRecorder_Click);
-            // 
-            // LblRecordDuration
-            // 
-            this.LblRecordDuration.AutoSize = true;
-            this.LblRecordDuration.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LblRecordDuration.Location = new System.Drawing.Point(65, 20);
-            this.LblRecordDuration.Margin = new System.Windows.Forms.Padding(0);
-            this.LblRecordDuration.Name = "LblRecordDuration";
-            this.LblRecordDuration.Size = new System.Drawing.Size(162, 46);
-            this.LblRecordDuration.TabIndex = 2;
-            this.LblRecordDuration.Text = "00:00:00";
-            // 
-            // BtnDrawRect
-            // 
-            this.BtnDrawRect.BackColor = System.Drawing.SystemColors.Control;
-            this.BtnDrawRect.BackgroundImage = global::ScreenRecorder.Properties.Resources.draw_rect;
-            this.BtnDrawRect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BtnDrawRect.FlatAppearance.BorderSize = 0;
-            this.BtnDrawRect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDrawRect.Location = new System.Drawing.Point(3, 3);
-            this.BtnDrawRect.Name = "BtnDrawRect";
-            this.BtnDrawRect.Size = new System.Drawing.Size(32, 32);
-            this.BtnDrawRect.TabIndex = 8;
-            this.BtnDrawRect.UseVisualStyleBackColor = false;
-            this.BtnDrawRect.Click += new System.EventHandler(this.BtnDrawRect_Click);
-            // 
-            // BtnSnapshot
-            // 
-            this.BtnSnapshot.BackgroundImage = global::ScreenRecorder.Properties.Resources.snapshot;
-            this.BtnSnapshot.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BtnSnapshot.FlatAppearance.BorderSize = 0;
-            this.BtnSnapshot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSnapshot.Location = new System.Drawing.Point(53, 3);
-            this.BtnSnapshot.Name = "BtnSnapshot";
-            this.BtnSnapshot.Size = new System.Drawing.Size(32, 32);
-            this.BtnSnapshot.TabIndex = 8;
-            this.BtnSnapshot.UseVisualStyleBackColor = true;
-            this.BtnSnapshot.Click += new System.EventHandler(this.BtnSnapshot_Click);
+            this.gridPanel2.Controls.Add(this.BtnSettings);
+            this.gridPanel2.Controls.Add(this.BtnSnapshot);
+            this.gridPanel2.Controls.Add(this.BtnDrawRect);
+            this.gridPanel2.Location = new System.Drawing.Point(13, 207);
+            this.gridPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.gridPanel2.Name = "gridPanel2";
+            this.gridPanel2.Size = new System.Drawing.Size(228, 53);
+            this.gridPanel2.Span = "33% 34% 33%;";
+            this.gridPanel2.TabIndex = 2;
+            this.gridPanel2.Text = "gridPanel2";
             // 
             // BtnSettings
             // 
-            this.BtnSettings.BackgroundImage = global::ScreenRecorder.Properties.Resources.setting;
-            this.BtnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BtnSettings.FlatAppearance.BorderSize = 0;
-            this.BtnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSettings.Location = new System.Drawing.Point(103, 3);
+            this.BtnSettings.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(220)))), ((int)(((byte)(57)))));
+            this.BtnSettings.Icon = ((System.Drawing.Image)(resources.GetObject("BtnSettings.Icon")));
+            this.BtnSettings.Location = new System.Drawing.Point(157, 4);
+            this.BtnSettings.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSettings.Name = "BtnSettings";
-            this.BtnSettings.Size = new System.Drawing.Size(32, 32);
-            this.BtnSettings.TabIndex = 9;
-            this.BtnSettings.UseVisualStyleBackColor = true;
-            this.BtnSettings.Click += new System.EventHandler(this.LinkSettingForm_Click);
+            this.BtnSettings.Size = new System.Drawing.Size(67, 45);
+            this.BtnSettings.TabIndex = 2;
+            this.BtnSettings.Text = "设置";
+            this.BtnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
             // 
-            // BtnAbout
+            // BtnSnapshot
             // 
-            this.BtnAbout.BackgroundImage = global::ScreenRecorder.Properties.Resources.about;
-            this.BtnAbout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BtnAbout.FlatAppearance.BorderSize = 0;
-            this.BtnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAbout.Location = new System.Drawing.Point(153, 3);
-            this.BtnAbout.Name = "BtnAbout";
-            this.BtnAbout.Size = new System.Drawing.Size(32, 32);
-            this.BtnAbout.TabIndex = 9;
-            this.BtnAbout.UseVisualStyleBackColor = true;
-            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
+            this.BtnSnapshot.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(220)))), ((int)(((byte)(57)))));
+            this.BtnSnapshot.Icon = ((System.Drawing.Image)(resources.GetObject("BtnSnapshot.Icon")));
+            this.BtnSnapshot.Location = new System.Drawing.Point(79, 4);
+            this.BtnSnapshot.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSnapshot.Name = "BtnSnapshot";
+            this.BtnSnapshot.Size = new System.Drawing.Size(70, 45);
+            this.BtnSnapshot.TabIndex = 1;
+            this.BtnSnapshot.Text = "截图";
+            this.BtnSnapshot.Click += new System.EventHandler(this.BtnSnapshot_Click);
             // 
-            // tableLayoutPanel1
+            // BtnDrawRect
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.BtnDrawRect, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BtnSnapshot, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BtnSettings, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BtnAbout, 3, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(65, 187);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 51);
-            this.tableLayoutPanel1.TabIndex = 11;
+            this.BtnDrawRect.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(220)))), ((int)(((byte)(57)))));
+            this.BtnDrawRect.Icon = ((System.Drawing.Image)(resources.GetObject("BtnDrawRect.Icon")));
+            this.BtnDrawRect.Location = new System.Drawing.Point(4, 4);
+            this.BtnDrawRect.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnDrawRect.Name = "BtnDrawRect";
+            this.BtnDrawRect.Size = new System.Drawing.Size(67, 45);
+            this.BtnDrawRect.TabIndex = 0;
+            this.BtnDrawRect.Text = "选区";
+            this.BtnDrawRect.Click += new System.EventHandler(this.BtnDrawRect_Click);
+            // 
+            // BtnPauseRecorder
+            // 
+            this.BtnPauseRecorder.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(220)))), ((int)(((byte)(57)))));
+            this.BtnPauseRecorder.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnPauseRecorder.Location = new System.Drawing.Point(13, 145);
+            this.BtnPauseRecorder.Name = "BtnPauseRecorder";
+            this.BtnPauseRecorder.Size = new System.Drawing.Size(228, 55);
+            this.BtnPauseRecorder.TabIndex = 2;
+            this.BtnPauseRecorder.Text = "暂停录制";
+            this.BtnPauseRecorder.Click += new System.EventHandler(this.BtnPauseRecorder_Click);
+            // 
+            // BtnStartRecorder
+            // 
+            this.BtnStartRecorder.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(220)))), ((int)(((byte)(57)))));
+            this.BtnStartRecorder.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnStartRecorder.Location = new System.Drawing.Point(13, 85);
+            this.BtnStartRecorder.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnStartRecorder.Name = "BtnStartRecorder";
+            this.BtnStartRecorder.Size = new System.Drawing.Size(228, 53);
+            this.BtnStartRecorder.TabIndex = 1;
+            this.BtnStartRecorder.Text = "开始录屏";
+            this.BtnStartRecorder.Click += new System.EventHandler(this.BtnStartRecorder_Click);
+            // 
+            // LblRecordDuration
+            // 
+            this.LblRecordDuration.BackColor = System.Drawing.Color.Moccasin;
+            this.LblRecordDuration.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LblRecordDuration.Location = new System.Drawing.Point(13, 22);
+            this.LblRecordDuration.Margin = new System.Windows.Forms.Padding(4);
+            this.LblRecordDuration.Name = "LblRecordDuration";
+            this.LblRecordDuration.Size = new System.Drawing.Size(224, 53);
+            this.LblRecordDuration.TabIndex = 0;
+            this.LblRecordDuration.Text = "00:00:00";
+            this.LblRecordDuration.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(314, 332);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.BtnPauseRecorder);
-            this.Controls.Add(this.BtnStartRecorder);
+            this.BackColor = System.Drawing.Color.Moccasin;
+            this.ClientSize = new System.Drawing.Size(254, 261);
             this.Controls.Add(this.LblRecordDuration);
-            this.DoubleBuffered = true;
+            this.Controls.Add(this.BtnStartRecorder);
+            this.Controls.Add(this.gridPanel2);
+            this.Controls.Add(this.BtnPauseRecorder);
+            this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(720, 560);
+            this.MinimumSize = new System.Drawing.Size(220, 280);
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "录屏";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.gridPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button BtnStartRecorder;
-        private System.Windows.Forms.Button BtnPauseRecorder;
-        private System.Windows.Forms.Label LblRecordDuration;
-        private System.Windows.Forms.Button BtnDrawRect;
-        private System.Windows.Forms.Button BtnSnapshot;
-        private System.Windows.Forms.Button BtnSettings;
-        private System.Windows.Forms.Button BtnAbout;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private AntdUI.Label LblRecordDuration;
+        private AntdUI.GridPanel gridPanel2;
+        private AntdUI.Button BtnSettings;
+        private AntdUI.Button BtnSnapshot;
+        private AntdUI.Button BtnDrawRect;
+        private AntdUI.Button BtnStartRecorder;
+        private AntdUI.Button BtnPauseRecorder;
     }
 }
 
