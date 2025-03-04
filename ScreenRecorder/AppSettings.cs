@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using ScreenRecorderLib;
 
 namespace ScreenRecorder
 {
@@ -12,6 +13,17 @@ namespace ScreenRecorder
             "settings.json"
         );
 
+        public AppSettings()
+        {
+            var monitorList = Recorder.GetDisplays();
+
+            VideoSourceName = monitorList.Count > 0 ? monitorList[0].FriendlyName : "";
+
+            var audioOutputList = Recorder.GetSystemAudioDevices(AudioDeviceSource.OutputDevices);
+            EnableAudioOutput = audioOutputList.Count > 0;
+            AudioOutputDevice = audioOutputList.Count > 0 ? audioOutputList[0].FriendlyName : "";
+        }
+
         public static AppSettings LoadConfig()
         {
             if (File.Exists(SettingFile))
@@ -19,7 +31,6 @@ namespace ScreenRecorder
                 var jsonStr = File.ReadAllText(SettingFile);
                 return JsonConvert.DeserializeObject<AppSettings>(jsonStr);
             }
-
             return new AppSettings();
         }
 

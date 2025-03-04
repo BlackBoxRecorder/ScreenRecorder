@@ -1,27 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AntdUI;
-using ScreenRecorder.Properties;
 using ScreenRecorderLib;
 
 namespace ScreenRecorder
 {
     public partial class MainForm : BaseForm
     {
-        private bool isRecording = false;
+        private volatile bool isRecording = false;
         private readonly Stopwatch sw = new Stopwatch();
 
         private Recorder recorder;
-        private AppSettings settings;
+        private AppSettings settings = AppSettings.LoadConfig();
 
         public MainForm()
         {
@@ -278,18 +271,6 @@ namespace ScreenRecorder
             recorder = null;
 
             settings = AppSettings.LoadConfig();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                settings = AppSettings.LoadConfig();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void UpdateRecordDuration()
